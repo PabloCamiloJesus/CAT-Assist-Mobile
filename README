@@ -2,3 +2,11 @@ Olá, Seja Bem Vindo à CAT Assist, uma central de atendimento ao cliente e part
 
 O CAT Assist contará não só com um aplicativo mobile, mas também uma plataforma na web, o que pode facilitar o acesso de qualquer tipo de aparelho que o usuário possua.
 
+[!]Dependencias do projeto
+
+npx create-expo-app cat-assist-mobile --template@50.0.17
+
+npx expo install react-native-web@^0.19.6 react-dom@18.2.0 @expo/webpack-config
+
+
+
