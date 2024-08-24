@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, Text } from 'react-native';
 
 
 const Splash = () => {
   return (
     <View style={styles.container}>
-        <Image src={require('../../assets/images/logo-sesi.png')} style={styles.sesiLogo} />
+        <Image source={require('../../assets/images/logo-sesi.png')} style={styles.sesiLogo} />
     </View>
   )
 }

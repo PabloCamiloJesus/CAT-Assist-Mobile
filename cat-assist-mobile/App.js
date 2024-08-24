@@ -1,9 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { AppRegistry, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 // Tela de Splash
-import Splash from "./components/splash";
-// Tela de Recepção
-import Recepcao from "./components/Recepcao";
+import Splash from "./screens/Splash";
+
+import Navbar from "./components/navbar";
 
 AppRegistry.registerComponent("main", () => App);
 
@@ -31,7 +35,7 @@ export default function App() {
       >
         <Stack.Screen
           name="Splash"
-          component={SplashScreen}
+          component={Splash}
           options={{
             headerShown: false,
           }}
@@ -41,90 +45,14 @@ export default function App() {
         />
       </Stack.Navigator>
 
-      {currentScreen != "Splash" &&
+      {/* {currentScreen != "Splash" &&
         currentScreen != "Login" &&
-        currentScreen != "_dev_addProfile" && (
-          <Navbar user={user} cs={currentScreen} />
-        )}
+        currentScreen != "_dev_addProfile" && ( */}
+          <Navbar cs={currentScreen} />
+        {/* )} */}
     </NavigationContainer>
   );
 }
-
-const Navbar = ({ user, cs }) => {
-  const navigation = useNavigation();
-
-  if (user) {
-    return (
-      <View style={styles.navbar}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Profile");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/samplePfp.webp")}
-            style={styles.pfpImg}
-          ></Image>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddKanban");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/addkanban.png")}
-            style={styles.pfpImgCenter}
-          ></Image>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Main");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/kanbanlist.png")}
-            style={styles.pfpImg}
-          ></Image>
-        </TouchableOpacity>
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.navbar}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Profile");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/npPfp_noUser.jpg")}
-            style={styles.pfpImg}
-          ></Image>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddKanban");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/addkanban.png")}
-            style={styles.pfpImgCenter}
-          ></Image>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Main");
-          }}
-        >
-          <Image
-            source={require("./screens/_assets/images/icons/kanbanlist.png")}
-            style={styles.pfpImg}
-          ></Image>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -135,44 +63,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  // pfpImg: {
-  //   borderRadius: 1000,
-  //   height: 40,
-  //   width: 40,
-  // },
-  // pfpImgCenter: {
-  //   borderRadius: 1000,
-  //   height: 50,
-  //   width: 50,
-  // },
-
-  // quicksandLight: {
-  //   fontFamily: 'Quicksand-Light',
-  //   fontSize: 20,
-  // },
-  // quicksandRegular: {
-  //   fontFamily: 'Quicksand-Regular',
-  //   fontSize: 20,
-  // },
-  // ralewayItalic: {
-  //   fontFamily: 'Raleway-Italic',
-  //   fontSize: 20,
-  // },
-  // ralewayThin: {
-  //   fontFamily: 'Raleway-ThinItalic',
-  //   fontSize: 20,
-  // },
-
-  // navbar: {
-  //   position: "absolute",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   bottom: 0,
-  //   width: "100%",
-  //   height: 60,
-  //   justifyContent: "space-around",
-  //   backgroundColor: "#2E2F30",
-  //   alignItems: "center",
-
-  // }
 });
