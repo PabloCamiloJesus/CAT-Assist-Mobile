@@ -6,7 +6,7 @@ const Recepcao = () => {
   return (
     <View style={styles.container}>
         <Text style={styles.principalText}>Programa do dia? Que tal um exercício</Text>
-        <TouchableOpacity style={styles.principalText}>Comece agora</TouchableOpacity>
+        <TouchableOpacity style={styles.principalText}><Text>Comece agora</Text></TouchableOpacity>
     </View>
   )
 }

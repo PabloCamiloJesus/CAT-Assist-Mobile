@@ -6,6 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // Tela de Splash
 import Splash from "./screens/Splash";
+import PageList from "./screens/_Dev_screens/pagelist";
+import Recepcao from "./screens/Recepcao";
 
 import Navbar from "./components/navbar";
 
@@ -13,9 +15,8 @@ AppRegistry.registerComponent("main", () => App);
 
 const Stack = createStackNavigator();
 
-// faz a coiso de screens e components, app.js vai virar tela de generalizados por causa do react-navigation
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState("Splash");
+  const [currentScreen, setCurrentScreen] = useState("PageList");
 
   // const user = auth.currentUser;
 
@@ -27,8 +28,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         // DEVELOPER-- switch to Splash after all the software is completed
-        // initialRouteName="PageList"
-        initialRouteName="Splash"
+        initialRouteName="PageList"
+        // initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -43,13 +44,33 @@ export default function App() {
             focus: () => handleNavigationChange("Splash"),
           })}
         />
+        <Stack.Screen
+          name="PageList"
+          component={PageList}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("PageList"),
+          })}
+        />
+        <Stack.Screen
+          name="Recepcao"
+          component={Recepcao}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Recepcao"),
+          })}
+        />
       </Stack.Navigator>
 
-      {/* {currentScreen != "Splash" &&
-        currentScreen != "Login" &&
-        currentScreen != "_dev_addProfile" && ( */}
+      {currentScreen != "Splash" &&
+        currentScreen != "Login" && (
           <Navbar cs={currentScreen} />
-        {/* )} */}
+        )}
+
     </NavigationContainer>
   );
 }
