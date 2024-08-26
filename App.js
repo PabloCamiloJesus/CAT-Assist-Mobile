@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { AppRegistry, StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
@@ -66,7 +68,8 @@ export default function App() {
         />
       </Stack.Navigator>
 
-      {currentScreen != "Splash" &&
+      {
+        currentScreen != "Splash" &&
         currentScreen != "Login" && (
           <Navbar cs={currentScreen} />
         )}
