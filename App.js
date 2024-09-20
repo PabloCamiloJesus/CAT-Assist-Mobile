@@ -7,9 +7,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Tela de Splash
+
 import Splash from "./screens/Splash";
 import PageList from "./screens/_Dev_screens/pagelist";
 import Recepcao from "./screens/Recepcao";
+import SobreNos from './screens/sobrenos/sobrenos';
+import Cadastro from './screens/Crie_conta/crieconta'
+import RecuperarSenha from "./screens/recuperacao/recuperar"
 
 import Navbar from "./components/navbar";
 
@@ -36,16 +40,7 @@ export default function App() {
           headerShown: false,
         }}
       >
-        <Stack.Screen
-          name="Splash"
-          component={Splash}
-          options={{
-            headerShown: false,
-          }}
-          listeners={({ navigation }) => ({
-            focus: () => handleNavigationChange("Splash"),
-          })}
-        />
+        {/* DEVELOPER SCREENS */}
         <Stack.Screen
           name="PageList"
           component={PageList}
@@ -54,6 +49,17 @@ export default function App() {
           }}
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("PageList"),
+          })}
+        />
+        {/* END OF DEVELOPER SCREENS */}
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Splash"),
           })}
         />
         <Stack.Screen
@@ -66,6 +72,36 @@ export default function App() {
             focus: () => handleNavigationChange("Recepcao"),
           })}
         />
+        <Stack.Screen
+          name="Sobrenos"
+          component={SobreNos}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Sobrenos"),
+          })}
+        />
+        <Stack.Screen
+          name="Cadastro"
+          component={Cadastro}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Cadastro"),
+          })}
+        />
+        <Stack.Screen
+          name="RecuperarSenha"
+          component={RecuperarSenha}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("RecuperarSenha"),
+          })}
+        />
       </Stack.Navigator>
 
       {
@@ -73,7 +109,6 @@ export default function App() {
         currentScreen != "Login" && (
           <Navbar cs={currentScreen} />
         )}
-
     </NavigationContainer>
   );
 }

@@ -1,8 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Image, View, Text } from 'react-native';
 
 
 const Splash = () => {
+  varnavigation = useNavigation();
+
+  setTimeout(() => {
+    
+    // trocar quando tela main/sistema de login for criada (o)
+    navigation.navigate("PageList")
+
+  }, 3000);
+
   return (
     <View style={styles.container}>
         <Image source={require('../../assets/images/logo-sesi.png')} style={styles.sesiLogo} />

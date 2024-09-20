@@ -12,6 +12,19 @@ const PageList = ({ navigation }) => {
                 title="Go to Recepcao"
                 onPress={() => navigation.navigate("Recepcao")}
             />
+            <Button
+                title="Go to SobreNos"
+                onPress={() => navigation.navigate("Sobrenos")}
+            />
+            <Button
+                title="Go to Cadastro"
+                onPress={() => navigation.navigate("Cadastro")}
+            />
+                      <Button
+                title="Go to recuperar senha"
+                onPress={() => navigation.navigate("RecuperarSenha")}
+            />
+            
         </View>
     )
 }

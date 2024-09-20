@@ -1,127 +1,71 @@
-import React from 'react'
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
 
-import { useNavigation } from "@react-navigation/native";
+import Home from "../assets/navbar/home.png"
+import Chat from "../assets/navbar/chat.png"
+import ChatBot from "../assets/navbar/chatbot_TEMP.png"
+import FAQ from "../assets/navbar/FAQ.png"
+import Profile from "../assets/navbar/profile.png"
+import { useNavigation } from '@react-navigation/native';
 
-const Navbar = ({ user, cs }) => {
-    const navigation = useNavigation();
-  
-    if (user) {
-      return (
-        <View style={styles.navbar}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Profile");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/samplePfp.webp")}
-              style={styles.pfpImg}
-            ></Image> */}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddKanban");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/addkanban.png")}
-              style={styles.pfpImgCenter}
-            ></Image> */}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Main");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/kanbanlist.png")}
-              style={styles.pfpImg}
-            ></Image> */}
-          </TouchableOpacity>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.navbar}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Profile");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/npPfp_noUser.jpg")}
-              style={styles.pfpImg}
-            ></Image> */}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddKanban");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/addkanban.png")}
-              style={styles.pfpImgCenter}
-            ></Image> */}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Main");
-            }}
-          >
-            {/* <Image
-              source={require("./screens/_assets/images/icons/kanbanlist.png")}
-              style={styles.pfpImg}
-            ></Image> */}
-          </TouchableOpacity>
-        </View>
-      );
-    }
-  };
+const { width } = Dimensions.get('window');
 
-export default Navbar
+const Navbar = () => {
+  const navigation = useNavigation();
+  const [active, setActive] = useState(0);
+
+  return (
+    <View style={styles.navbar}>
+      {screens.map((screen, index) => (
+        <TouchableOpacity
+          key={index}
+          style={screen.styleFormat}
+          onPress={() => navigation.navigate(screen.screen)}
+        > 
+           {/* color: active === index ? '#673ab7' : '#FFF' */} 
+          <Image source={screen.image} alt="" />
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    
-  pfpImg: {
-    borderRadius: 1000,
-    height: 40,
-    width: 40,
-  },
-  pfpImgCenter: {
-    borderRadius: 1000,
-    height: 50,
-    width: 50,
-  },
-
-  quicksandLight: {
-    fontFamily: 'Quicksand-Light',
-    fontSize: 20,
-  },
-  quicksandRegular: {
-    fontFamily: 'Quicksand-Regular',
-    fontSize: 20,
-  },
-  ralewayItalic: {
-    fontFamily: 'Raleway-Italic',
-    fontSize: 20,
-  },
-  ralewayThin: {
-    fontFamily: 'Raleway-ThinItalic',
-    fontSize: 20,
-  },
-
   navbar: {
-    position: "absolute",
-    display: "flex",
-    flexDirection: "row",
-    bottom: 0,
-    width: "100%",
-    height: 60,
-    justifyContent: "space-around",
-    backgroundColor: "#2E2F30",
+    margin: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: "center",
-
+    backgroundColor: 'black',
+  },
+  navItem: {
+    margin: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  screen: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%', // Added to ensure full screen height
+  },
+  icon: {
+    color: "#FFF",
+  }, 
+  mainIcon: {
+    color: "#FFF",
+    backgroundColor: "#BF0B3B",
+    padding: 20,
+    borderRadius: 50,
+    marginTop: -35,
   }
+});
 
-})
+const screens = [
+  { name: 'Home', image: Home, screen: "Sobrenos", styleFormat: styles.icon },
+  { name: 'Chat', image: Chat, screen: "chatScreen", styleFormat: styles.icon },
+  { name: 'ChatBot', image: ChatBot, screen: "chatBotScreen", styleFormat: styles.mainIcon },
+  { name: 'FAQ', image: FAQ, screen: "FAQScreen", styleFormat: styles.icon },
+  { name: 'Profile', image: Profile, screen: "ProfileScreen", styleFormat: styles.icon },
+];
+
+export default Navbar;
