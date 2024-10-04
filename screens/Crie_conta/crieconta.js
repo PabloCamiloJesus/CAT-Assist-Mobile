@@ -1,88 +1,101 @@
-import React from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
+import React, { useRef, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Animated, Easing, SafeAreaView } from "react-native";
 
 function Cadastro() {
+  // Usando o useRef para criar uma Animated.Value que controla a posição da imageSection
+  const imagePosition = useRef(new Animated.Value(-250)).current; // Começando fora da tela
+
+  // useEffect para iniciar a animação assim que o componente é montado
+  useEffect(() => {
+    Animated.timing(imagePosition, {
+      toValue: 0, // Valor final para trazê-la para o topo da tela
+      duration: 1200, // Duração da animação
+      easing: Easing.out(Easing.ease), // Efeito suave
+      useNativeDriver: true, // Melhorar o desempenho da animação
+    }).start();
+  }, [imagePosition]);
+
   return (
-    <View style={styles.container}>
-      {/* Seção de imagem e título */}
-      <View style={styles.imageSection}>
-        <Image
-          source={require("../../assets/login.cadastro/bolafutebol.png")}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* Seção de imagem com animação */}
+        <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
+          <Image
+            source={require("../../assets/login.cadastro/bolafutebol.png")}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </Animated.View>
 
-      <Text style={styles.title}>Crie sua conta</Text>
+        <Text style={styles.title}>Crie sua conta</Text>
 
-      {/* Formulário de cadastro */}
-      <View style={styles.form}>
+        {/* Formulário de cadastro */}
+        <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            placeholder="Nome de usuário:"
+            placeholderTextColor="#000"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail:"
+            placeholderTextColor="#000"
+            keyboardType="email-address"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Senha:"
+            placeholderTextColor="#000"
+            secureTextEntry
+          />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nome de usuário:"
-          placeholderTextColor="#000"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail:"
-          placeholderTextColor="#000"
-          keyboardType="email-address"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Senha:"
-          placeholderTextColor="#000"
-          secureTextEntry
-        />
-
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.loginText}>
-          Já possui cadastro?
-          <TouchableOpacity>
-            <Text style={styles.loginLink}> Faça Login!</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
-        </Text>
+
+          <Text style={styles.loginText}>
+            Já possui cadastro?
+            <TouchableOpacity>
+              <Text style={styles.loginLink}> Faça Login!</Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-    display: "flex",
+  safeArea: {
+    flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 2,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   imageSection: {
-    marginTop: -170,
     backgroundColor: "#bf0b3b", // Parte vermelha da tela
-    width: "100%",
-    paddingVertical: 1,
+    height: "35%", // Define a altura da parte vermelha em relação à tela
+    justifyContent: "center", // Alinha a bola de futebol no centro
+    alignItems: "center",
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
   },
   image: {
-    marginLeft: '15%',
-    width: 200,
-    height: 200,
-    display: "flex"
+    width: 250,
+    height: 250,
+    marginBottom: -75, // Metade da bola de futebol fica fora da parte vermelha
   },
   title: {
-    alignItems: "center",
-    fontSize: 24,
+    marginTop: 20, // Pequeno espaço entre a parte vermelha e o título
+    fontSize: 32,
     color: "#000",
-    marginVertical: 20,
+    textAlign: "center",
   },
   form: {
-
     width: "80%",
+    alignSelf: "center",
     marginTop: 30,
   },
   input: {
@@ -94,7 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: "#bf0b3b",
+    backgroundColor: "#bf0b3b", // Cor vermelha do botão
     paddingVertical: 15,
     alignItems: "center",
     borderRadius: 5,
