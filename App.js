@@ -6,15 +6,20 @@ import { AppRegistry, StyleSheet, View, TouchableOpacity, Text } from "react-nat
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// Tela de Splash
-
 import Splash from "./screens/Splash";
 import PageList from "./screens/_Dev_screens/pagelist";
 import Recepcao from "./screens/Recepcao";
 import SobreNos from './screens/sobrenos/sobrenos';
-import Cadastro from './screens/Crie_conta/crieconta'
-import RecuperarSenha from "./screens/recuperacao/recuperar"
-
+import Cadastro from './screens/Crie_conta/crieconta';
+import RecuperarSenha from "./screens/recuperacao/recuperar";
+import Avalicao_tela from "./screens/avaliacao/avaliacao";
+import Login from "./screens/login";
+import ProfileScreen from "./screens/tela_perfil/perfil";
+import HomeScreen from "./screens/Home/home";
+import ChatbotScreen from "./screens/Chatbot/ChatbotScreen";
+import ChatScreen from "./screens/Chat/ChatScreen";
+import Redefinicao from "./screens/Redefinir_senha/redefinicaao"
+import FAQScreen from './screens/FAQ/FAQScreen';
 import Navbar from "./components/navbar";
 
 AppRegistry.registerComponent("main", () => App);
@@ -23,8 +28,6 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("PageList");
-
-  // const user = auth.currentUser;
 
   const handleNavigationChange = (routeName) => {
     setCurrentScreen(routeName);
@@ -93,6 +96,16 @@ export default function App() {
           })}
         />
         <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Login"),
+          })}
+        />
+        <Stack.Screen
           name="RecuperarSenha"
           component={RecuperarSenha}
           options={{
@@ -101,6 +114,84 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("RecuperarSenha"),
           })}
+          
+        />
+        <Stack.Screen
+          name="Redefinicao"
+          component={Redefinicao}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Redefinicao"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="Avalicao_tela"
+          component={Avalicao_tela}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Avalicao_tela"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("ProfileScreen"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("HomeScreen"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("ChatScreen"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="ChatbotScreen"
+          component={ChatbotScreen}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("ChatbotScreen"),
+          })}
+          
+        />
+        <Stack.Screen
+          name="FAQScreen"
+          component={FAQScreen}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("FAQScreen"),
+          })}
+          
         />
       </Stack.Navigator>
 

@@ -1,28 +1,23 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
 
-function Cadastro() {
+function Login() {
   return (
     <View style={styles.container}>
       {/* Seção de imagem e título */}
       <View style={styles.imageSection}>
         <Image
-          source={require("../../assets/login.cadastro/bolafutebol.png")}
+          source={require("../../assets/login.cadastro/bolabasquete.png")}
           style={styles.image}
           resizeMode="contain"
         />
       </View>
 
-      <Text style={styles.title}>Crie sua conta</Text>
+      <Text style={styles.title} >Faça seu login</Text>
 
-      {/* Formulário de cadastro */}
+      {/* Formulário de login */}
       <View style={styles.form}>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nome de usuário:"
-          placeholderTextColor="#000"
-        />
         <TextInput
           style={styles.input}
           placeholder="E-mail:"
@@ -41,9 +36,9 @@ function Cadastro() {
         </TouchableOpacity>
 
         <Text style={styles.loginText}>
-          Já possui cadastro?
+          Não possui cadastro?
           <TouchableOpacity>
-            <Text style={styles.loginLink}> Faça Login!</Text>
+          <Text style={styles.loginLink}>Faça seu cadastro!</Text>
           </TouchableOpacity>
         </Text>
       </View>
@@ -53,35 +48,39 @@ function Cadastro() {
 
 const styles = StyleSheet.create({
   container: {
-
+    marginTop: -3,
     display: "flex",
     backgroundColor: "#fff",
     alignItems: "center",
+    
     justifyContent: "center",
-    flex: 2,
+    flex:2
   },
   imageSection: {
-    marginTop: -170,
-    backgroundColor: "#bf0b3b", // Parte vermelha da tela
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: 'center',
+    backgroundColor: "#000000", // Parte preta da tela alterada de acordo com o figma
     width: "100%",
-    paddingVertical: 1,
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
   },
   image: {
-    marginLeft: '15%',
-    width: 200,
-    height: 200,
-    display: "flex"
+    
+    
+    width: 150,
+    height: 150,
+    display: "flex",
+    marginRight: "-33"
+
   },
   title: {
     alignItems: "center",
-    fontSize: 24,
+    fontSize: 50,
     color: "#000",
     marginVertical: 20,
   },
   form: {
-
     width: "80%",
     marginTop: 30,
   },
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: "#bf0b3b",
+    backgroundColor: "#000000", // Parte preta do buttom alterada de acordo com o figma
     paddingVertical: 15,
     alignItems: "center",
     borderRadius: 5,
@@ -116,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Cadastro;
+export default Login;

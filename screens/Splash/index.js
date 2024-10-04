@@ -4,18 +4,16 @@ import { StyleSheet, Image, View, Text } from 'react-native';
 
 
 const Splash = () => {
-  varnavigation = useNavigation();
+  var navigation = useNavigation();
 
   setTimeout(() => {
-    
     // trocar quando tela main/sistema de login for criada (o)
     navigation.navigate("PageList")
-
   }, 3000);
 
   return (
     <View style={styles.container}>
-        <Image source={require('../../assets/images/logo-sesi.png')} style={styles.sesiLogo} />
+      <Image source={require('../../assets/images/logo-sesi.png')} style={styles.sesiLogo} />
     </View>
   )
 }
@@ -23,16 +21,16 @@ const Splash = () => {
 export default Splash
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1, 
-        justifyContent:'center', 
-        alignItems:'center',
-        backgroundColor:'#000',
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
 
-    sesiLogo:{
-        height:100,
-        width:300,
-        
-    }
+  sesiLogo: {
+    height: 100,
+    width: 300,
+
+  }
 })

@@ -1,15 +1,17 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-
+import { useNavigation } from '@react-navigation/native';
 
 const Recepcao = () => {
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Text style={styles.principalText}>
         Programa do dia? Que tal um exercício
       </Text>
-      <TouchableOpacity style={styles.principalButton}>
+      <TouchableOpacity style={styles.principalButton} onPress={() => navigation.navigate("HomeScreen")}>
         <Text style={styles.textButton}>Comece agora</Text>
       </TouchableOpacity>
     </View>
@@ -33,7 +35,6 @@ const styles = StyleSheet.create({
   },
 
   principalText: {
-    fontFamily: "Raleway",
     fontSize: 36,
     color: "#000",
     borderRadius: 15,

@@ -13,6 +13,11 @@ const PageList = ({ navigation }) => {
                 onPress={() => navigation.navigate("Recepcao")}
             />
             <Button
+                title="Go to Redifinição"
+                onPress={() => navigation.navigate("Redefinicao")}
+            />
+
+            <Button
                 title="Go to SobreNos"
                 onPress={() => navigation.navigate("Sobrenos")}
             />
@@ -20,11 +25,27 @@ const PageList = ({ navigation }) => {
                 title="Go to Cadastro"
                 onPress={() => navigation.navigate("Cadastro")}
             />
-                      <Button
+            <Button
                 title="Go to recuperar senha"
                 onPress={() => navigation.navigate("RecuperarSenha")}
             />
-            
+            <Button
+                title="Go to login"
+                onPress={() => navigation.navigate("Login")}
+            />
+            <Button
+                title="Go to avaliacao"
+                onPress={() => navigation.navigate("Avalicao_tela")}
+            />
+            <Button
+                title="Tela de profile"
+                onPress={() => navigation.navigate("ProfileScreen")}
+            />
+            <Button
+                title="go to PerguntasFrequentes"
+                onPress={() => navigation.navigate("PerguntasFrequentes")}
+            />
+
         </View>
     )
 }

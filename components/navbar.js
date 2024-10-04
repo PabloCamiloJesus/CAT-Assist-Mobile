@@ -21,8 +21,8 @@ const Navbar = () => {
           key={index}
           style={screen.styleFormat}
           onPress={() => navigation.navigate(screen.screen)}
-        > 
-           {/* color: active === index ? '#673ab7' : '#FFF' */} 
+        >
+          {/* color: active === index ? '#673ab7' : '#FFF' */}
           <Image source={screen.image} alt="" />
         </TouchableOpacity>
       ))}
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "#FFF",
-  }, 
+  },
   mainIcon: {
     color: "#FFF",
     backgroundColor: "#BF0B3B",
@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
 });
 
 const screens = [
-  { name: 'Home', image: Home, screen: "Sobrenos", styleFormat: styles.icon },
-  { name: 'Chat', image: Chat, screen: "chatScreen", styleFormat: styles.icon },
-  { name: 'ChatBot', image: ChatBot, screen: "chatBotScreen", styleFormat: styles.mainIcon },
+  { name: 'Home', image: Home, screen: "HomeScreen", styleFormat: styles.icon },
+  { name: 'Chat', image: Chat, screen: "ChatScreen", styleFormat: styles.icon },
+  { name: 'ChatBot', image: ChatBot, screen: "ChatbotScreen", styleFormat: styles.mainIcon },
   { name: 'FAQ', image: FAQ, screen: "FAQScreen", styleFormat: styles.icon },
   { name: 'Profile', image: Profile, screen: "ProfileScreen", styleFormat: styles.icon },
 ];
