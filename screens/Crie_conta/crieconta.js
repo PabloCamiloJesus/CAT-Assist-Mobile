@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   imageSection: {
     backgroundColor: "#bf0b3b", // Parte vermelha da tela
     height: "35%", // Define a altura da parte vermelha em relação à tela
-    justifyContent: "center", // Alinha a bola de futebol no centro
+    justifyContent: "center", // Alinha a bola de futebol no centro verticalmente
     alignItems: "center",
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   image: {
     width: 250,
     height: 250,
-    marginBottom: -75, // Metade da bola de futebol fica fora da parte vermelha
+    marginLeft: "-25%", // Desloca a imagem 25% para a esquerda
   },
   title: {
     marginTop: 20, // Pequeno espaço entre a parte vermelha e o título

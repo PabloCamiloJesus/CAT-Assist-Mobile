@@ -45,6 +45,10 @@ const PageList = ({ navigation }) => {
                 title="go to PerguntasFrequentes"
                 onPress={() => navigation.navigate("PerguntasFrequentes")}
             />
+            <Button
+                title="go to Chat"
+                onPress={() => navigation.navigate("Chat")}
+            />
 
         </View>
     )
