@@ -5,47 +5,45 @@ const PageList = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Button
-                title="Go to Splash"
+                title="Abrir tela de Splash"
                 onPress={() => navigation.navigate("Splash")}
             />
             <Button
-                title="Go to Recepcao"
+                title="Abrir tela de Recepcao"
                 onPress={() => navigation.navigate("Recepcao")}
             />
             <Button
-                title="Go to Redifinição"
+                title="Abrir tela de Redefinição de senha"
                 onPress={() => navigation.navigate("Redefinicao")}
             />
-
             <Button
-                title="Go to SobreNos"
+                title="Abrir tela de SobreNos"
                 onPress={() => navigation.navigate("Sobrenos")}
             />
             <Button
-                title="Go to Cadastro"
+                title="Abrir tela de Cadastro"
                 onPress={() => navigation.navigate("Cadastro")}
             />
             <Button
-                title="Go to recuperar senha"
+                title="Abrir tela de recuperar senha"
                 onPress={() => navigation.navigate("RecuperarSenha")}
             />
             <Button
-                title="Go to login"
+                title="Abrir tela de login"
                 onPress={() => navigation.navigate("Login")}
             />
             <Button
-                title="Go to avaliacao"
+                title="Abrir tela de avaliacao"
                 onPress={() => navigation.navigate("Avalicao_tela")}
             />
             <Button
-                title="Tela de profile"
+                title="Abrir tela de perfil"
                 onPress={() => navigation.navigate("ProfileScreen")}
             />
             <Button
-                title="go to PerguntasFrequentes"
-                onPress={() => navigation.navigate("PerguntasFrequentes")}
+                title="Abrir tela de Perguntas Frequentes"
+                onPress={() => navigation.navigate("FAQScreen")}
             />
-
         </View>
     )
 }

@@ -21,7 +21,8 @@ const SobreNos = () => {
               />
               <Text style={styles.BoxTitulo}>Missão</Text>
               <Text style={styles.BoxTexto}>
-                Otimizar e modernizar os sistemas de comunicação e informação do CAT SESI Santo André, abrangendo desde a gestão interna até a comunicação com os usuários.
+                Desenvolver soluções web inovadoras e personalizadas, otimizando experiências e resultados através de tecnologias de ponta.
+
               </Text>
             </View>
             <View style={styles.box}>
@@ -31,7 +32,7 @@ const SobreNos = () => {
               />
               <Text style={styles.BoxTitulo}>Visão</Text>
               <Text style={styles.BoxTexto}>
-                Queremos ser uma organização  e líder no nosso setor, reconhecida pela excelência em nossos serviços, e pela nossa capacidade de adaptar e crescer em um mercado em constante evolução.
+                Ser referência global em desenvolvimento de websites, destacando-se pela inovação e impacto positivo nos negócios dos nossos clientes.
               </Text>
             </View>
             <View style={styles.box}>
@@ -41,7 +42,7 @@ const SobreNos = () => {
               />
               <Text style={styles.BoxTitulo}>Valores</Text>
               <Text style={styles.BoxTexto}>
-                Inovação: Soluções tecnológicas criativas e eficazes. Eficiência: Processos de atendimento rápidos e precisos. Acessibilidade: Atendimento fácil e intuitivo para todos os usuários. Integração: Harmonização entre diferentes sistemas e canais.
+                inovação, Excelência, Colaboração, Ética e Transparência, Sustentabilidade.
               </Text>
             </View>
 

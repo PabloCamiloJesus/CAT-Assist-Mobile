@@ -54,9 +54,9 @@ function Cadastro() {
           </TouchableOpacity>
 
           <Text style={styles.loginText}>
-            Já possui cadastro?
+            Já possui cadastro? <Text style={styles.loginLink}>Faça Login!</Text>
             <TouchableOpacity>
-              <Text style={styles.loginLink}> Faça Login!</Text>
+             
             </TouchableOpacity>
           </Text>
         </View>
@@ -76,19 +76,22 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     backgroundColor: "#bf0b3b", // Parte vermelha da tela
-    height: "35%", // Define a altura da parte vermelha em relação à tela
+    height: "25%", // Define a altura da parte vermelha em relação à tela
     justifyContent: "center", // Alinha a bola de futebol no centro
-    alignItems: "center",
+    // alignItems: "center",
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
+
   },
   image: {
-    width: 250,
+    marginLeft: -34,
+    width:350,
     height: 250,
-    marginBottom: -75, // Metade da bola de futebol fica fora da parte vermelha
+    marginBottom: -10, // Metade da bola de futebol fica fora da parte vermelha
+    marginRight: "100px",
   },
   title: {
-    marginTop: 20, // Pequeno espaço entre a parte vermelha e o título
+    marginTop: 60, // Pequeno espaço entre a parte vermelha e o título
     fontSize: 32,
     color: "#000",
     textAlign: "center",
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#bf0b3b", // Cor vermelha do botão
     paddingVertical: 15,
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 15,
     marginTop: 20,
   },
   buttonText: {
