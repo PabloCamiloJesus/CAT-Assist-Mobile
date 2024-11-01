@@ -29,10 +29,11 @@
           />
         </Animated.View>
 
-        <Text style={styles.title}>Faça seu login</Text>
+       
 
         {/* Formulário de login */}
         <View style={styles.form}>
+        <Text style={styles.title}>Faça seu login</Text>
           <TextInput
             style={styles.input}
             placeholder="E-mail:"
@@ -67,6 +68,8 @@
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
+      
+      position: 'fixed'
     },
     imageSection: {
       position: "absolute", // Deixa a imagem e a parte preta fixas no topo
@@ -77,8 +80,8 @@
       height: "30%", // Define a altura da parte preta
       justifyContent: "center",
       alignItems: "center",
-      borderBottomLeftRadius: 18,
-      borderBottomRightRadius: 18,
+      borderBottomLeftRadius: 25,
+      borderBottomRightRadius: 25
     },
     image: {
       
@@ -87,14 +90,17 @@
       height: 170
     },
     title: {
+      alignItems: 'center',
       marginTop: "60%", // Ajuste para alinhar o título corretamente abaixo da parte preta
       fontSize: 40,
       color: "#000",
       marginVertical: 20,
+      position: 'fixed'
     },
     form: {
+      padding: 5,
       width: "80%",
-      marginTop: 30,
+      marginTop: 50,
     },
     input: {
       height: 50,
