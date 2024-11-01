@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,  } from 'react-native';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const ChatLayout = ({ navigation }) => {
-  // Função de navegação para a página de perfil
-  const handleProfileClick = () => {
-    navigation.navigate('Profile'); // Certifique-se de que a tela de perfil esteja registrada na navegação
-  };
+
+const ChatLayout = () => {
 
   return (
     <View style={styles.container}>
       {/* Cabeçalho com o texto atendimento */}
       <View style={styles.Header}>
-        <Text style={styles.atendimento}>Atendimento</Text>
+      <TouchableOpacity style={styles.backButton}>
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.atendimento}> Atendimento</Text>
       </View>
 
       {/* Área de mensagens */}
@@ -32,12 +33,10 @@ const ChatLayout = ({ navigation }) => {
           <View style={styles.userMessage}>
             <Text style={styles.userText}>Oiee, eu estou tendo problemas com meu login</Text>
           </View>
-          <TouchableOpacity onPress={handleProfileClick}>
             <Image
               source={{ uri: 'https://i.pinimg.com/originals/14/37/4f/14374f6454e77e82c48051a3bb61dd9c.jpg' }}
               style={styles.profileImage}
             />
-          </TouchableOpacity>
         </View>
       </ScrollView>
 
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
   atendimento: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 0,
   },
   chatContainer: {
     padding: 10,
@@ -135,11 +134,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginLeft: 10,
     marginRight: 5,
-  },
-  sendButtonText: {
+  }, 
+   sendButtonText: {
     color: '#fff',
     fontSize: 16,
   },
+  backButton: {
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    marginLeft: 1,
+  },
+  backButtonText: {
+    fontSize: 26,
+  },
+
 });
 
 export default ChatLayout;

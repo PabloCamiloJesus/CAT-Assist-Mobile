@@ -161,7 +161,7 @@ export default function App() {
           
         />
         <Stack.Screen
-          name="ChatScreen"
+          name="Chat"
           component={ChatScreen}
           options={{
             headerShown: false,

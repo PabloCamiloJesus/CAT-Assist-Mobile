@@ -44,6 +44,10 @@ const PageList = ({ navigation }) => {
                 title="Abrir tela de Perguntas Frequentes"
                 onPress={() => navigation.navigate("FAQScreen")}
             />
+            <Button
+                title="go to Chat"
+                onPress={() => navigation.navigate("Chat")}
+            />
         </View>
     )
 }
