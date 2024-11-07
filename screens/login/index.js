@@ -19,11 +19,11 @@
     }, [imagePosition]);
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {/* Animando a seção de imagem */}
         <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
           <Image
-            source={require("../../assets/login.cadastro/bolabasquete.png")}
+            source={require("../../assets/images/bolabasquete.png")}
             style={styles.image}
             resizeMode="contain"
           />
@@ -51,6 +51,16 @@
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 
+
+
+
+
+
+
+
+
+
+
           <Text style={styles.loginText}>
             Não possui cadastro?
             <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
@@ -58,7 +68,7 @@
             </TouchableOpacity> <Text style={styles.loginLink}>Faça seu cadastro!</Text>
           </Text>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -86,8 +96,8 @@
     image: {
       
       marginBottom: "-50%",
-      width: 170,
-      height: 170
+      width: 240,
+      height: 222
     },
     title: {
       alignItems: 'center',

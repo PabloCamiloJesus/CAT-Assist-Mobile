@@ -3,13 +3,13 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-const ChatLayout = () => {
+const ChatLayout = ({navigation}) => {
 
   return (
     <View style={styles.container}>
       {/* Cabeçalho com o texto atendimento */}
       <View style={styles.Header}>
-      <TouchableOpacity style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.atendimento}> Atendimento</Text>

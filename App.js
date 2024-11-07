@@ -197,7 +197,8 @@ export default function App() {
 
       {
         currentScreen != "Splash" &&
-        currentScreen != "Login" && (
+        currentScreen != "Cadastro" &&
+        currentScreen != "Login" && ( 
           <Navbar cs={currentScreen} />
         )}
     </NavigationContainer>

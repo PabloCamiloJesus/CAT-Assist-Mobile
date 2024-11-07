@@ -9,7 +9,7 @@ const SobreNos = () => {
         source={{ uri: 'https://i.ibb.co/qk8Xv3T/sesicat2mobile.jpg' }}
         style={styles.Fundoimg}>
         <Text style={styles.bannerTitulo}>Sobre Nós</Text>
-        <Text style={styles.bannerDescricao}> Um pouco sobre o que somos e o que pretendemos alcançar.</Text>
+        <Text style={styles.bannerDescricao}> Bem-vindo à nossa plataforma! Somos uma equipe apaixonada por tecnologia, inovação e atendimento eficiente. Nosso objetivo é transformar a maneira como você interage com serviços digitais, proporcionando uma experiência otimizada e intuitiva. Com um foco voltado para soluções de comunicação modernas e integradas, trabalhamos constantemente para garantir que você tenha acesso fácil e rápido às informações que precisa.</Text>
         {/* Adicionando uma camada para escurecer a imagem */}
         {/* Missão, Visão, Valores */}
         <View style={styles.section}>

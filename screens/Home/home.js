@@ -1,167 +1,231 @@
-import React, { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  FlatList,
-  Animated,
-  useWindowDimensions,
-} from "react-native";
+import React from 'react';
+import { ScrollView, View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
 
-const slides = [
-  { id: '1', title: 'Slide 1', description: 'Descrição do Slide 1', image: 'https://example.com/image1.jpg' },
-  { id: '2', title: 'Slide 2', description: 'Descrição do Slide 2', image: 'https://example.com/image2.jpg' },
-  { id: '3', title: 'Slide 3', description: 'Descrição do Slide 3', image: 'https://example.com/image3.jpg' },
-];
-
-const HomeScreen = () => {
-  const { width } = useWindowDimensions();
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const viewableItemsChanged = useRef(({ viewableItems }) => {
-    setCurrentIndex(viewableItems[0].index);
-  }).current;
-
-  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
-
+export default function App({navigation}) {
   return (
-    <View style={styles.container}>
-      {/* Caixa Vermelha */}
-      <View style={styles.redBox}>
-        {/* Carrossel */}
-      <View style={styles.carouselContainer}>
-        <FlatList
-          data={slides}
-          renderItem={({ item }) => (
-            <View style={[styles.slide, { width }]}>
-              <Image source={{ uri: item.image }} style={[styles.image, { width }]} />
-              <Text style={styles.title}>{item.title}</Text>
-              <Text>{item.description}</Text>
-            </View>
-          )}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          keyExtractor={(item) => item.id}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            { useNativeDriver: false }
-          )}
-          onViewableItemsChanged={viewableItemsChanged}
-          viewabilityConfig={viewConfig}
-          scrollEventThrottle={32}
-          style={styles.boxCarousel}
+    // Scrollview pra pode deslizar pela pagina
+    <ScrollView style={styles.container}>
+      {/* Fundo com imagem principal */}
+      <ImageBackground 
+        source={require("../../assets/images/camposesi.jpg")}
+        style={styles.background}
+      >
+        {/* view para criar uma camada escura e diminuir a opacidade */}
+        <View style={styles.overlay} />
+
+        {/* Conteúdo do site */}
+        <View style={styles.content}>
+          <Text style={styles.title}>UNA</Text>
+          <Text style={styles.description}>
+          Conheça Luna, Nossa Assistente Virtual, pronta para auxiliá-lo(a) na resolução de suas necessidades. Inteligente e eficiente, Luna está à disposição para oferecer suporte e orientações precisas em diversas situações. Experimente agora e descubra como Luna pode facilitar sua experiência.
+          </Text>
+          
+          <TouchableOpacity onPress={() => navigation.navigate("ChatbotScreen")}
+          style={styles.button}>
+            <Text style={styles.buttonText}>ASSISTENTE VIRTUAL</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+
+      {/* ----------------------------------------------Seção Atendimento Online-------------------------------------------------- */}
+      <View style={styles.content3}>
+        {/* Título */}
+        <Text style={styles.title3}>ATENDIMENTO ONLINE</Text>
+          {/* imagem representativa */}
+        <Image
+          source={require("../../assets/images/atendimento.png")}
+          style={styles.image}
         />
-
-        {/* Indicadores de página */}
-        <View style={styles.indicatorContainer}>
-          {slides.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.indicator,
-                currentIndex === index ? styles.activeIndicator : styles.inactiveIndicator,
-              ]}
-            />
-          ))}
-        </View>
-      </View>
+        {/* descrição */}
+        <Text style={styles.description3}>
+          Você pode falar com um membro da nossa secretaria através do atendimento online durante os seguintes horários:
+          Terça a Sexta: das 8h às 20h
+          Sábado: das 8h ao 12hrs
+          Domingo e Segunda: Fechado
+        </Text>
+        {/* Botao de saiba mais */}
+        <TouchableOpacity  onPress={() => navigation.navigate("Chat")}
+         style={styles.button2}>
+          <Text style={styles.buttonText3}>Suporte</Text>
+        </TouchableOpacity>
       </View>
 
+      {/* Linha preta divisória */}
+      <View style={styles.linha} />
 
-      {/* Conteúdo abaixo do carrossel */}
-      <View>
-        <View>
-          <Image></Image>
-          <Text></Text>
-          <Text></Text>
-        </View>
-
-        <View></View>
-
-        <View>
-          <Image></Image>
-          <Text></Text>
-          <Text></Text>
-        </View>
-
-        <View></View>
-
-        <View>
-          <Image></Image>
-          <Text></Text>
-          <Text></Text>
-        </View>
+      {/* ----------------------------------------Seção Atendimento Automático-------------------------------------------------------- */}
+      <View style={styles.content3}>
+        {/* titulo */}
+        <Text style={styles.title3}>SOBRE NÓS</Text>
+        {/* imagem representativa */}
+        <Image
+         source={require("../../assets/images/assistente-virtual.png")}
+          style={styles.image}
+        />
+        {/* Descricao */}
+        <Text style={styles.description3}>
+        Um pouco sobre o que somos e o que pretendemos alcançar.
+        </Text>
+        {/* Botao de redirecionamento a assistente virtual */}
+        <TouchableOpacity  onPress={() => navigation.navigate("ChatbotScreen")}
+        style={styles.button3}>
+          <Text style={styles.buttonText3}>Assistente Virtual</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+      {/* ----------------------------------------Seção Sobre Nos--------------------------------------------------------  */}
+      <View style={styles.content4}>
+        {/* titulo */}
+        <Text style={styles.title4}>SOBRE NÓS</Text>
+        {/* imagem representativa */}
+        {/* Descricao */}
+        <Text style={styles.description4}>
+        Um pouco sobre o que somos e o que pretendemos alcançar.
+        </Text>
+        {/* Botao de redirecionamento a assistente virtual */}
+        <TouchableOpacity  onPress={() => navigation.navigate("Sobrenos")}
+        style={styles.button4}>
+          <Text style={styles.buttonText4}>Mais informações</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
-};
+}
 
-export default HomeScreen;
-
+// area estilizacao
 const styles = StyleSheet.create({
+// container geral
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#000',
   },
-
-  redBox: {
-    height: '30%',
-    width: '100%',
-    flexGrow: 2,
-    marginBottom: 300,
-    marginTop: -100,
-    borderRadius: 50,
-    backgroundColor: '#bf0b3b',
-  },
-
-  // Estilos do carrossel
-  carouselContainer: {
-    marginTop: 10,
-    
-  },
-
-  boxCarousel:{
-    padding:20,
-    borderRadius:20,
-    borderWidth:10,
-    borderColor:'#fff',
-  },
-  slide: {
+  // imagem de fundo principal
+  background: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    width: '100%',
+    height: 550,
   },
-  image: {
-    height: 200,
-    resizeMode: 'cover',
+  // camada de cor por cima para diminuir a opacidade
+  overlay: {
+    //  preencher toda area
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Sobreposição para escurecer a imagem de fundo
+  },
+  // area do conteudo
+  content: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 50,
+  },
+  
+  content3: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 50,
+  },
+  content4: {
+    backgroundColor: '#D10542',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 50,
   },
   title: {
     fontSize: 24,
+    color: '#FFF',
     fontWeight: 'bold',
-    marginVertical: 10,
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  indicatorContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
+  title3: {
+    fontSize: 24,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  indicator: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 5,
+  title4: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  activeIndicator: {
-    backgroundColor: 'blue',
+  description: {
+    fontSize: 16,
+    color: '#DDD',
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  inactiveIndicator: {
-    backgroundColor: 'gray',
+  description3: {
+    fontSize: 16,
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  description4: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#D10542',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  button2: {
+    backgroundColor: '#D10542',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  button3: {
+    backgroundColor: 'black',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  button4: {
+    backgroundColor: 'white',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  button3: {
+    backgroundColor: '#D10542',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonText3: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonText4: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  // Linha preta
+  linha: {
+    height: 1,
+    backgroundColor: 'black',
+    marginVertical: 0.1,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
   },
 });

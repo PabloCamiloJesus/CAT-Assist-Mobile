@@ -2,26 +2,23 @@ import React, { useRef, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Animated, Easing, SafeAreaView } from "react-native";
 
 function Cadastro() {
-  // Usando o useRef para criar uma Animated.Value que controla a posição da imageSection
-  const imagePosition = useRef(new Animated.Value(-250)).current; // Começando fora da tela
+  const imagePosition = useRef(new Animated.Value(-250)).current;
 
-  // useEffect para iniciar a animação assim que o componente é montado
   useEffect(() => {
     Animated.timing(imagePosition, {
-      toValue: 0, // Valor final para trazê-la para o topo da tela
-      duration: 1200, // Duração da animação
-      easing: Easing.out(Easing.ease), // Efeito suave
-      useNativeDriver: true, // Melhorar o desempenho da animação
+      toValue: 0,
+      duration: 1200,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
     }).start();
   }, [imagePosition]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Seção de imagem com animação */}
         <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
           <Image
-            source={require("../../assets/login.cadastro/bolafutebol.png")}
+            source={require("../../assets/images/bolafutebol.png")}
             style={styles.image}
             resizeMode="contain"
           />
@@ -29,7 +26,6 @@ function Cadastro() {
 
         <Text style={styles.title}>Crie sua conta</Text>
 
-        {/* Formulário de cadastro */}
         <View style={styles.form}>
           <TextInput
             style={styles.input}
@@ -55,9 +51,6 @@ function Cadastro() {
 
           <Text style={styles.loginText}>
             Já possui cadastro? <Text style={styles.loginLink}>Faça Login!</Text>
-            <TouchableOpacity>
-             
-            </TouchableOpacity>
           </Text>
         </View>
       </View>
@@ -75,59 +68,48 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   imageSection: {
-    backgroundColor: "#bf0b3b", // Parte vermelha da tela
-    height: "25%", // Define a altura da parte vermelha em relação à tela
-    justifyContent: "center", // Alinha a bola de futebol no centro
-    // alignItems: "center",
-    height: "35%", // Define a altura da parte vermelha em relação à tela
-    justifyContent: "center", // Alinha a bola de futebol no centro verticalmente
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    borderBottomLeftRadius: 18,
-    borderBottomRightRadius: 18,
-
   },
   image: {
-    marginLeft: -34,
-    width:350,
-    height: 250,
-    marginBottom: -10, // Metade da bola de futebol fica fora da parte vermelha
-    marginRight: "100px",
-
-    marginLeft: "-25%", // Desloca a imagem 25% para a esquerda
+    marginTop: -10,
+    height: 385,
+    width: 390,
+    marginBottom: -30,
   },
   title: {
-    display: "flex",
-    marginTop: 60, // Pequeno espaço entre a parte vermelha e o título
-    fontSize: 32,
+    marginTop: 10, // Menor margem superior
+    fontSize: 28, // Redução do tamanho da fonte
     color: "#000",
     textAlign: "center",
   },
   form: {
     width: "80%",
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 10, // Menor margem superior
   },
   input: {
-    height: 50,
+    height: 45, // Redução da altura dos inputs
     borderBottomWidth: 1,
     borderBottomColor: "#000",
-    marginBottom: 20,
+    marginBottom: 15, // Redução do espaço entre os inputs
     fontSize: 16,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: "#bf0b3b", // Cor vermelha do botão
-    paddingVertical: 15,
+    backgroundColor: "#BF0B3B",
+    paddingVertical: 12, // Redução do padding do botão
     alignItems: "center",
     borderRadius: 15,
-    marginTop: 20,
+    marginTop: 15,
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
   },
   loginText: {
-    marginTop: 20,
+    marginTop: 15, // Redução da margem superior
     textAlign: "center",
     fontSize: 14,
     color: "#000",

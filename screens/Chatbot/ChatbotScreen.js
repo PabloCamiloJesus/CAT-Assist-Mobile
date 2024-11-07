@@ -6,7 +6,8 @@ const ChatbotScreen = () => {
     <View style={styles.container}>
       {/* Cabeçalho com o texto atendimento */}
       <View style={styles.Header}>
-      <TouchableOpacity style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.navigate("ChatbotScreen")}
+       style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.atendimento}> Luna</Text>
