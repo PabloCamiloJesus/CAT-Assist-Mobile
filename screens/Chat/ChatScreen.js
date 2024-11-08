@@ -9,7 +9,7 @@ const ChatLayout = ({navigation}) => {
     <View style={styles.container}>
       {/* Cabeçalho com o texto atendimento */}
       <View style={styles.Header}>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")} style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.atendimento}> Atendimento</Text>
@@ -20,7 +20,7 @@ const ChatLayout = ({navigation}) => {
         {/* Mensagem do bot */}
         <View style={styles.messageContainer}>
           <Image
-            source={{ uri: 'https://i.pinimg.com/736x/f2/6f/db/f26fdb0529a4f5c4f6352261141dddd0.jpg' }}
+            source={{ uri: 'https://media.istockphoto.com/id/1423369897/pt/foto/call-center-worker.jpg?s=612x612&w=0&k=20&c=Oa3cHXy-QSWXx0ML4sEKQ5Dt-wMR6hdgCeYXEynGdik=' }}
             style={styles.profileImage}
           />
           <View style={styles.botMessage}>
@@ -34,7 +34,7 @@ const ChatLayout = ({navigation}) => {
             <Text style={styles.userText}>Oiee, eu estou tendo problemas com meu login</Text>
           </View>
             <Image
-              source={{ uri: 'https://i.pinimg.com/originals/14/37/4f/14374f6454e77e82c48051a3bb61dd9c.jpg' }}
+              source={{ uri: 'https://blog.estacio.br/wp-content/uploads/2022/11/dia-do-estudante.jpeg' }}
               style={styles.profileImage}
             />
         </View>

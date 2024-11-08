@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const PerguntasFrequentes = () => {
+const PerguntasFrequentes = ({navigation}) => {
 
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -57,6 +57,8 @@ const PerguntasFrequentes = () => {
     <ScrollView>   
     <View style={styles.container}>
     <Text style={styles.titulo}>Perguntas frequentes</Text>
+
+    
       
       {questions.map((item, index) => (
         <View key={index}>
@@ -80,6 +82,10 @@ const PerguntasFrequentes = () => {
 };
 
 const styles = StyleSheet.create({
+  backButtonText: {
+  fontSize: 40,
+
+  },
   titulo: {
     marginBottom: 10,
     fontSize: 24,

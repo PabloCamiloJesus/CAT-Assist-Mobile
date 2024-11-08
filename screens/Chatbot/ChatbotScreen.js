@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,  } from 'react-native';
 
-const ChatbotScreen = () => {
+const ChatbotScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* Cabeçalho com o texto atendimento */}
       <View style={styles.Header}>
-      <TouchableOpacity onPress={() => navigation.navigate("ChatbotScreen")}
+      <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}
        style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
