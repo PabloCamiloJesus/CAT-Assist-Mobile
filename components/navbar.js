@@ -8,6 +8,8 @@ import FAQ from "../assets/navbar/FAQ.png"
 import Profile from "../assets/navbar/profile.png"
 import { useNavigation } from '@react-navigation/native';
 
+import Loading from '../screens/loading/loading';
+
 import { onAuthStateChanged } from "firebase/auth";
 
 import { db, auth } from "./services/firebase";

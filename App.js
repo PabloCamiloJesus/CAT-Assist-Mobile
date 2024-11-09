@@ -37,8 +37,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         // DEVELOPER-- switch to Splash after all the software is completed
-        // initialRouteName="PageList"
-        initialRouteName="Splash"
+        initialRouteName="PageList"
+        // initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -198,6 +198,7 @@ export default function App() {
       {
         currentScreen != "Splash" &&
         currentScreen != "Cadastro" &&
+        currentScreen != "ChatbotScreen" &&
         currentScreen != "Login" && ( 
           <Navbar cs={currentScreen} />
         )}

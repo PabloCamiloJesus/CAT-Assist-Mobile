@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { signOut, onAuthStateChanged } from "firebase/auth";
 
+import Loading from '../loading/loading';
+
 import { db, auth } from "../../components/services/firebase";
 
 const ProfileScreen = () => {
@@ -34,7 +36,7 @@ const ProfileScreen = () => {
     return unsubscribe;
   }, [user, auth])
 
-  if (loading) return <Text>Carregando</Text>;
+  if (loading) return <Loading />;
 
   return (
     <View style={styles.container}>

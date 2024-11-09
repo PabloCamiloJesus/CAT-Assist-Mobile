@@ -46,7 +46,11 @@ const PageList = ({ navigation }) => {
             />
             <Button
                 title="go to Chat"
-                onPress={() => navigation.navigate("Chat")}
+                onPress={() => navigation.navigate("ChatScreen")}
+            />
+            <Button
+                title="Abrir tela de Chatbot"
+                onPress={() => navigation.navigate("ChatbotScreen")}
             />
         </View>
     )
