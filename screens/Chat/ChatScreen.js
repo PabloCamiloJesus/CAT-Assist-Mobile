@@ -1,58 +1,191 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,  } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  where,
+  serverTimestamp,
+} from "firebase/firestore";
 
-const ChatLayout = ({navigation}) => {
+import { auth, db } from "../../components/services/firebase";
+import firebase from "firebase/compat/app";
+import { onAuthStateChanged } from "firebase/auth";
+import "firebase/compat/firestore";
 
-  return (
-    <View style={styles.container}>
-      {/* Cabeçalho com o texto atendimento */}
-      <View style={styles.Header}>
-      <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")} style={styles.backButton}>
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.atendimento}> Atendimento</Text>
-      </View>
+import { useNavigation } from '@react-navigation/native';
+import Loading from '../loading/loading';
 
-      {/* Área de mensagens */}
-      <ScrollView contentContainerStyle={styles.chatContainer}>
-        {/* Mensagem do bot */}
-        <View style={styles.messageContainer}>
-          <Image
-            source={{ uri: 'https://media.istockphoto.com/id/1423369897/pt/foto/call-center-worker.jpg?s=612x612&w=0&k=20&c=Oa3cHXy-QSWXx0ML4sEKQ5Dt-wMR6hdgCeYXEynGdik=' }}
-            style={styles.profileImage}
+const ChatLayout = ({ navigation }) => {
+  const [employees, setEmployeeId] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+
+  const [clientId, setClientChatId] = useState(null);
+
+  const [chatterName, setChatter] = useState("Funcionário");
+  const [chatId, setChatId] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+
+        setClientChatId(auth.currentUser.uid);
+        setUser(auth.currentUser);
+        setLoading(false);
+
+      } else {
+
+        setUser(null);
+        setLoading(false);
+        navigation.navigate("Login");
+      }
+
+    });
+  }, [auth]);
+
+  useEffect(() => {
+    if (chatId) {
+      const messagesQuery = query(
+        collection(db, "messages"),
+        where("chatId", "==", chatId)
+      );
+
+      onSnapshot(messagesQuery, (snapshot) => {
+        const messagesArray = snapshot.docs.map((doc) => doc.data());
+
+        var sortedMsgs = messagesArray.sort((a, b) => a.timestamp - b.timestamp);
+
+        setMessages(sortedMsgs);
+      });
+    }
+  }, [chatId]);
+
+  const sendMessage = async () => {
+    setSending(true)
+    setSending(true)
+
+    if (newMessage.trim()) {
+      var data = {
+        chatId: chatId,
+        senderId: clientId,
+        text: newMessage,
+        timestamp: serverTimestamp(),
+      };
+
+      await addDoc(collection(db, "messages"), data);
+
+      setNewMessage("");
+      setSending(false)
+    }
+  };
+
+  useEffect(() => {
+    const employeesQuery = query(collection(db, "chats"));
+
+    onSnapshot(employeesQuery, (snapshot) => {
+      const employeesArr = snapshot.docs
+        .map((doc) => doc.data())
+        .filter((chat) => chat.users.some((user) => user.id === clientId));
+
+      setEmployeeId(employeesArr);
+
+    });
+  }, [employees]);
+
+  if (loading) return <Loading />;
+
+  if (chatId) {
+
+    return (
+      <View style={styles.container}>
+        {/* Cabeçalho com o texto atendimento */}
+        <View style={styles.Header}>
+          <TouchableOpacity onPress={() => setChatId(null)} style={styles.backButton}>
+            <Text style={styles.backButtonText}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.atendimento}> Atendimento</Text>
+        </View>
+
+        {/* Área de mensagens FINAL */}
+        <ScrollView contentContainerStyle={styles.chatContainer}>
+          {messages.map((msg, index) => (
+            <View key={index} style={[styles.messageContainer, msg.senderId === clientId ? { justifyContent: 'flex-end' } : {}]}>
+              {/* <Image
+                source={{ uri: 'https://media.istockphoto.com/id/1423369897/pt/foto/call-center-worker.jpg?s=612x612&w=0&k=20&c=Oa3cHXy-QSWXx0ML4sEKQ5Dt-wMR6hdgCeYXEynGdik=' }}
+                style={styles.profileImage}
+              /> */}
+              <View style={msg.senderId === clientId ? styles.userMessage : styles.botMessage}>
+                <Text style={msg.senderId === clientId ? styles.userText : styles.botText}>
+                  {msg.senderId === clientId ? "" : chatterName + ": "}{msg.text}
+                </Text>
+              </View>
+            </View>
+          ))}
+
+        </ScrollView>
+
+        {/* Barra de entrada */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite aqui..."
+            value={newMessage}
+            onChangeText={(e) => setNewMessage(e)}
+            placeholderTextColor="#999"
           />
-          <View style={styles.botMessage}>
-            <Text style={styles.botText}>Olá! como posso ajudar?</Text>
-          </View>
+          <TouchableOpacity disabled={sending} onPress={() => sendMessage()} style={styles.sendButton}>
+            <Text style={styles.sendButtonText}>Enviar</Text>
+          </TouchableOpacity>
         </View>
-
-        {/* Mensagem do usuário */}
-        <View style={[styles.messageContainer, { justifyContent: 'flex-end' }]}>
-          <View style={styles.userMessage}>
-            <Text style={styles.userText}>Oiee, eu estou tendo problemas com meu login</Text>
-          </View>
-            <Image
-              source={{ uri: 'https://blog.estacio.br/wp-content/uploads/2022/11/dia-do-estudante.jpeg' }}
-              style={styles.profileImage}
-            />
-        </View>
-      </ScrollView>
-
-      {/* Barra de entrada */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite aqui..."
-          placeholderTextColor="#999"
-        />
-        <TouchableOpacity style={styles.sendButton}>
-          <Text style={styles.sendButtonText}>Enviar</Text>
-        </TouchableOpacity>
       </View>
-    </View>
-  );
+    );
+
+  } else {
+
+    return (
+      <View style={styles.container2}>
+        <View style={styles.Header}>
+          <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")} style={styles.backButton}>
+            <Text style={styles.backButtonText}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.atendimento}> Atendimento</Text>
+        </View>
+        {employees.map((employee, index) => {
+          return (
+            <View style={styles.contactList} key={index}>
+              {employee["users"].map((employee2, index2) => {
+                return (
+                  <View key={index2}>
+                    {employee2.id != clientId && employee2.id != clientId && (
+                      <TouchableOpacity
+                        style={styles.contactButton}
+                        onPress={() => {
+                          setChatId(employee.id);
+                          setChatter(employee2.name);
+                        }}
+                      >
+                        <Text>
+                          {employee2.name ? employee2.name : "Default"}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+    )
+  }
 };
 
 const styles = StyleSheet.create({
@@ -60,6 +193,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0ecec',
     justifyContent: 'space-between',
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: '#f0ecec',
+    width: "100%"
+  },
+  contactButton: {
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 2,
+    width: '100%',
+    paddingVertical: 12,
+  },
+  contactList: {
+    flex: 1,
+    flexDirection: "column",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   Header: {
     flexDirection: 'row',
@@ -101,6 +253,7 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     backgroundColor: '#c00c3c',
+    color: '#ffffff',
     padding: 10,
     borderRadius: 20,
     maxWidth: '80%',
@@ -134,8 +287,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginLeft: 10,
     marginRight: 5,
-  }, 
-   sendButtonText: {
+  },
+  sendButtonText: {
     color: '#fff',
     fontSize: 16,
   },

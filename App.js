@@ -198,6 +198,7 @@ export default function App() {
       {
         currentScreen != "Splash" &&
         currentScreen != "Cadastro" &&
+        currentScreen != "ChatScreen" &&
         currentScreen != "ChatbotScreen" &&
         currentScreen != "Login" && ( 
           <Navbar cs={currentScreen} />
