@@ -2,6 +2,7 @@
   "expo": {
     "name": "cat-assist-mobile",
     "slug": "cat-assist-mobile",
+    "scheme": "https",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +19,20 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.toranjeworks.catassist",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
+    "web": { 
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed78b510-3b35-4885-a8d9-5a401350db31"
+      }
     }
   }
 }

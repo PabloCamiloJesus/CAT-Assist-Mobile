@@ -37,8 +37,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         // DEVELOPER-- switch to Splash after all the software is completed
-        initialRouteName="PageList"
-        // initialRouteName="Splash"
+        // initialRouteName="PageList"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -161,7 +161,7 @@ export default function App() {
           
         />
         <Stack.Screen
-          name="Chat"
+          name="ChatScreen"
           component={ChatScreen}
           options={{
             headerShown: false,

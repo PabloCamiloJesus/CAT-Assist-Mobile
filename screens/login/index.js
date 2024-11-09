@@ -2,9 +2,19 @@ import React, { useRef, useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Animated, Easing, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { db, auth, provider } from "../../components/services/firebase";
+import { db, auth } from "../../components/services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
+import * as Google from 'expo-auth-session/providers/google';
+
+import {
+  collection,
+  query,
+  where,
+  onSnapshot
+} from "firebase/firestore";
+
+import { REACT_APP_EXPO_CLIENTID, REACT_APP_ANDROID_CLIENTID } from "@env";
 
 function Login() {
   const navigation = useNavigation();
@@ -14,6 +24,14 @@ function Login() {
   const [errorMessage, seterrorMessage] = useState("");
 
   const imagePosition = useRef(new Animated.Value(-300)).current;
+
+  // acesso é negado devido a verificação do google
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: REACT_APP_EXPO_CLIENTID,
+    webClientId: REACT_APP_EXPO_CLIENTID,
+    androidClientId: REACT_APP_ANDROID_CLIENTID,
+  });
+
 
   useEffect(() => {
     Animated.timing(imagePosition, {
@@ -28,14 +46,10 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
-        const user = userCredentials.user;
+        setEmail("");
+        setPassword("");
 
-        const userInfo = {
-          email: user.email,
-          uid: user.uid,
-        };
-
-        navigation.navigate('Main', { userInfo });
+        navigation.navigate('HomeScreen');
       })
       .catch(error => {
 
@@ -64,15 +78,6 @@ function Login() {
 
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const dadosUsuario = { email, senha };
-    console.log(dadosUsuario);
-    setEmail("");
-    setSenha(""); // Limpa o formulário após o envio
-    setConfSenha(""); // Limpa o formulário após o envio
-  };
-
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
@@ -94,24 +99,29 @@ function Login() {
             <TextInput
               style={styles.input}
               placeholder="E-mail:"
+              inputMode="email"
               placeholderTextColor="#000"
+              value={email}
               onChangeText={(e) => { console.log(email); setEmail(e) }}
               keyboardType="email-address"
+              autoComplete="email"
             />
             <TextInput
               style={styles.input}
               placeholder="Senha:"
               placeholderTextColor="#000"
+              value={password}
               onChangeText={(e) => { console.log(password); setPassword(e) }}
               secureTextEntry
+              autoComplete="password"
             />
             <Text style={styles.loginLinks}>Esqueci minha senha</Text>
 
             <View styles={styles.buttonCont}>
-              <TouchableOpacity onPress={(navigation) => logIn(navigation)} style={styles.button}>
+              <TouchableOpacity onPress={() => logIn({ navigation })} style={styles.button}>
                 <Text style={styles.buttonText}>Entrar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={(navigation) => logIn(navigation)} style={styles.buttonGoogle}>
+              <TouchableOpacity onPress={() => promptAsync()} style={styles.buttonGoogle}>
                 <Text style={styles.buttonText}>Entrar com o google</Text>
               </TouchableOpacity>
               <Text>{errorMessage}</Text>

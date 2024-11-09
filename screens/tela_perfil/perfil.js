@@ -1,42 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { signOut, onAuthStateChanged } from "firebase/auth";
+
+import { db, auth } from "../../components/services/firebase";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
+  const [user, setUser] = useState(null);
+
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  const [pfpImg, setpfpImg] = useState("../assets/navbar/profile.png");
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (userData) => {
+
+      if (userData) {
+        setUser(auth.currentUser); 
+        setLoading(false);
+      } else {
+        setUser(null);
+        setLoading(true);
+        navigation.navigate("Login")
+      }
+
+    });
+
+    return unsubscribe;
+  }, [user, auth])
+
+  if (loading) return <Text>Carregando</Text>;
+
   return (
     <View style={styles.container}>
       {/* Header with Profile Picture */}
       <View style={styles.header}>
         {/* Profile Image larger and overlapping */}
         <Image
-          source={{ uri: 'https://via.placeholder.com/150/CCCCCC/808080?Text=No+Image' }}
+          source={{ uri: user ? user.photoURL : "asset:../assets/navbar/profile.png" }}
           style={styles.profileImage}
         />
       </View>
-      
+
       {/* Profile Details */}
       <View style={styles.profileDetails}>
-        <Text style={styles.name}>DANIEL ROSA SILVA</Text>
+        <Text style={styles.name}>{user ? user.displayName : "DEFAULT"}</Text>
         <Text style={styles.age}>9 anos</Text>
-        
+
         <View style={styles.divider} />
 
         <Text style={styles.label}>E-MAIL</Text>
-        <Text style={styles.email}>exemplo@gmail.com</Text>
+        <Text style={styles.email}>{user ? user.email : "DEFAULT"}</Text>
 
         <View style={styles.divider} />
 
-        <Text style={styles.label}>DATA NASCIMENTO</Text>
-        <Text style={styles.birthDate}>05/06/2015</Text>
+        {/* <Text style={styles.label}>DATA NASCIMENTO</Text>
+        <Text style={styles.birthDate}>05/06/2015</Text> */}
 
-        <View style={styles.divider} />
+        {/* <View style={styles.divider} /> */}
 
         {/* Card Expiry and Logout Button */}
         <View style={styles.footer}>
-          <View>
+          {/* <View>
             <Text style={styles.cardLabel}>Vencimento da carteirinha:</Text>
             <Text style={styles.cardExpiry}>12/09/2026</Text>
-          </View>
-          <TouchableOpacity style={styles.logoutButton}>
+          </View> */}
+          <TouchableOpacity onPress={() => {
+            signOut(auth)
+              .then(() => {
+                setUser(null); 
+                setLoading(true);
+                navigation.navigate("HomeScreen");
+              })
+              .catch((error) => {
+                console.error("Erro ao sair: ", error);
+              });
+          }} style={styles.logoutButton}>
             <Text style={styles.logoutText}>LOGOUT</Text>
           </TouchableOpacity>
         </View>
@@ -104,8 +148,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: '100%',
+    display: "flex",
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
   },

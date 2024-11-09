@@ -8,7 +8,7 @@ const Splash = () => {
 
   setTimeout(() => {
     // trocar quando tela main/sistema de login for criada (o)
-    navigation.navigate("PageList")
+    navigation.navigate("HomeScreen")
   }, 3000);
 
   return (

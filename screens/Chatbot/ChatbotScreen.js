@@ -141,11 +141,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   endButton: {
+    position: "absolute",
+    right: 10,
+    top: 50,
     backgroundColor: '#c00c3c',
     borderRadius: 25,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginLeft: 190,
   }, 
    endButtonText: {
     color: '#fff',
@@ -154,7 +156,9 @@ const styles = StyleSheet.create({
   backButton: {
     paddingHorizontal: 5,
     paddingVertical: 10,
-    marginLeft: 1,
+    display:"flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   backButtonText: {
     fontSize: 26,

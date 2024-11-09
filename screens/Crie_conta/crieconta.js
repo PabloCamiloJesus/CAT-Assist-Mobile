@@ -3,15 +3,30 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Animated, E
 import { useNavigation } from "@react-navigation/native";
 
 import { db, auth, provider } from "../../components/services/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import * as Google from 'expo-auth-session/providers/google';
 
-import pfp from "../../assets/images/user.png"
+import {
+  collection,
+  addDoc,
+} from "firebase/firestore";
+
+import { REACT_APP_EXPO_CLIENTID, REACT_APP_ANDROID_CLIENTID } from "@env";
 
 function Cadastro() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConfPassword] = useState("");
-  const [imgFilePath, setimgFilePath] = useState(pfp);
+  const photoURL = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg";
+  const [errorMessage, seterrorMessage] = useState("");
+
+  // acesso é negado devido a verificação do google
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: REACT_APP_EXPO_CLIENTID,
+    webClientId: REACT_APP_EXPO_CLIENTID,
+    androidClientId: REACT_APP_ANDROID_CLIENTID,
+  });
 
   const imagePosition = useRef(new Animated.Value(-250)).current;
 
@@ -25,7 +40,15 @@ function Cadastro() {
       useNativeDriver: true,
     }).start();
   }, [imagePosition]);
-  
+
+  // useEffect(() => {
+  //   if (response?.type === 'success') {
+  //     const { id_token } = response.authentication;
+  //     const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
+  //     firebase.auth().signInWithCredential(credential);
+  //   }
+  // }, [response]);
+
   const register = ({ navigation }) => {
 
     if (password != conPassword) {
@@ -33,20 +56,23 @@ function Cadastro() {
       return
     }
 
-    createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async userCredentials => {
         const user = userCredentials.user;
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfPassword("");
 
-        db.collection('users').doc(user.uid).set({
-          username: username,
-          email: email,
-          imgUrl: imgFilePath,
-        });
+        await updateProfile(auth.currentUser, {
+          displayName: username,
+          photoURL: photoURL
+        })
 
-        navigation.navigate("PageList", { messageType: "success", message: "Usuário cadastrado com sucesso!" })
+        navigation.navigate("Login")
       })
       .catch(error => {
-
+        console.log(error);
         switch (error.code) {
           case 'auth/email-already-in-use':
             seterrorMessage('Este email já está em uso. Por favor, use outro email.');
@@ -64,9 +90,6 @@ function Cadastro() {
             seterrorMessage('Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.');
             break;
         }
-
-        console.log(error)
-
       });
   }
 
@@ -91,34 +114,55 @@ function Cadastro() {
             <TextInput
               style={styles.input}
               placeholder="Nome de usuário:"
-              onChangeText={(e) => {console.log(username); setUsername(e)}}
+              inputMode="text"
+              id="name"
+              value={username}
+              onChangeText={(e) => { console.log(username); setUsername(e) }}
               placeholderTextColor="#000"
+              keyboardType="default"
+              autoComplete="username"
             />
             <TextInput
               style={styles.input}
               placeholder="E-mail:"
-              onChangeText={(e) => {console.log(email); setEmail(e)}}
+              inputMode="email"
+              id="email"
+              value={email}
+              onChangeText={(e) => { console.log(email); setEmail(e) }}
               placeholderTextColor="#000"
               keyboardType="email-address"
+              autoComplete="email"
             />
             <TextInput
               style={styles.input}
               placeholder="Senha:"
-              onChangeText={(e) => {console.log(password); setPassword(e)}}
+              id="password"
+              value={password}
+              onChangeText={(e) => { console.log(password); setPassword(e) }}
               placeholderTextColor="#000"
               secureTextEntry
+              autoComplete="password"
             />
             <TextInput
               style={styles.input}
               placeholder="Confirmar senha:"
-              onChangeText={(e) => {console.log(conPassword); setConfPassword(e)}}
+              id="confirmpassword"
+              value={conPassword}
+              onChangeText={(e) => { console.log(conPassword); setConfPassword(e) }}
               placeholderTextColor="#000"
               secureTextEntry
+              autoComplete="password"
             />
 
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText} onPress={() => register()}>Cadastrar</Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity style={styles.button} onPress={() => register({ navigation })}>
+                <Text style={styles.buttonText}>Cadastrar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity disabled={!request} onPress={() => promptAsync()} style={styles.buttonGoogle}>
+                <Text style={styles.buttonText}>Entrar com o google</Text>
+              </TouchableOpacity>
+              <Text>{errorMessage}</Text>
+            </View>
 
             <Text style={styles.loginText}>
               Já possui cadastro? <Text style={styles.loginLink} onPress={() => navigation.navigate("Login")}>Faça Login!</Text>
@@ -179,6 +223,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
     marginTop: 15,
+  },
+  buttonGoogle: {
+    backgroundColor: "#000",
+    paddingVertical: 10,
+    alignItems: "center",
+    width: "100%",
+    marginTop: 20,
   },
   buttonText: {
     color: "#fff",

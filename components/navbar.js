@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
 
 import Home from "../assets/navbar/home.png"
@@ -8,11 +8,49 @@ import FAQ from "../assets/navbar/FAQ.png"
 import Profile from "../assets/navbar/profile.png"
 import { useNavigation } from '@react-navigation/native';
 
+import { onAuthStateChanged } from "firebase/auth";
+
+import { db, auth } from "./services/firebase";
+
 const { width } = Dimensions.get('window');
+
+import {
+  collection,
+  query,
+  where,
+  onSnapshot
+} from "firebase/firestore";
 
 const Navbar = () => {
   const navigation = useNavigation();
-  const [active, setActive] = useState(0);
+
+  const [loading, setLoading] = useState(true);
+
+  const [user, setUser] = useState(null);
+
+  const screens = [
+    { name: 'Home', image: Home, screen: "HomeScreen", styleFormat: styles.icon, iconStyle: styles.none },
+    { name: 'Chat', image: Chat, screen: "ChatScreen", styleFormat: styles.icon, iconStyle: styles.none },
+    { name: 'ChatBot', image: ChatBot, screen: "ChatbotScreen", styleFormat: styles.mainIcon, iconStyle: styles.none },
+    { name: 'FAQ', image: FAQ, screen: "FAQScreen", styleFormat: styles.icon, iconStyle: styles.none },
+    { name: 'Profile', image: user ? { uri: user.photoURL } : require('../assets/navbar/profile.png'), screen: "ProfileScreen", styleFormat: styles.icon, iconStyle: user ? styles.pfp : styles.none },
+  ];
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (userData) => {
+
+      if (userData) {
+        setUser(userData);
+      }
+
+      // console.log(user)
+      setLoading(false)
+
+    });
+
+  }, [])
+
+  if (loading) return <Text>Carregando</Text>;
 
   return (
     <View style={styles.navbar}>
@@ -23,7 +61,7 @@ const Navbar = () => {
           onPress={() => navigation.navigate(screen.screen)}
         >
           {/* color: active === index ? '#673ab7' : '#FFF' */}
-          <Image source={screen.image} alt="" />
+          <Image source={screen.image} style={screen.iconStyle} alt="" />
         </TouchableOpacity>
       ))}
     </View>
@@ -31,6 +69,9 @@ const Navbar = () => {
 };
 
 const styles = StyleSheet.create({
+  none: {
+
+  },
   navbar: {
     margin: 0,
     flexDirection: 'row',
@@ -51,6 +92,10 @@ const styles = StyleSheet.create({
   icon: {
     color: "#FFF",
   },
+  pfp: {
+    padding: 15,
+    borderRadius: 80
+  },
   mainIcon: {
     color: "#FFF",
     backgroundColor: "#BF0B3B",
@@ -59,13 +104,5 @@ const styles = StyleSheet.create({
     marginTop: -35,
   }
 });
-
-const screens = [
-  { name: 'Home', image: Home, screen: "HomeScreen", styleFormat: styles.icon },
-  { name: 'Chat', image: Chat, screen: "ChatScreen", styleFormat: styles.icon },
-  { name: 'ChatBot', image: ChatBot, screen: "ChatbotScreen", styleFormat: styles.mainIcon },
-  { name: 'FAQ', image: FAQ, screen: "FAQScreen", styleFormat: styles.icon },
-  { name: 'Profile', image: Profile, screen: "ProfileScreen", styleFormat: styles.icon },
-];
 
 export default Navbar;
