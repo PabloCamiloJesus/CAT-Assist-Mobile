@@ -11,7 +11,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 
-import { REACT_APP_EXPO_CLIENTID, REACT_APP_ANDROID_CLIENTID } from "@env";
+// import { process.env.EXPO_PUBLIC_EXPO_CLIENTID, process.env.EXPO_PUBLIC_ANDROID_CLIENTID } from "@env";
 
 function Cadastro() {
   const [username, setUsername] = useState("");
@@ -23,9 +23,9 @@ function Cadastro() {
 
   // acesso é negado devido a verificação do google
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: REACT_APP_EXPO_CLIENTID,
-    webClientId: REACT_APP_EXPO_CLIENTID,
-    androidClientId: REACT_APP_ANDROID_CLIENTID,
+    expoClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
+    webClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
+    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENTID,
   });
 
   const imagePosition = useRef(new Animated.Value(-250)).current;

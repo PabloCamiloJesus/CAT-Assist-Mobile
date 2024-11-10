@@ -6,19 +6,19 @@ import { initializeAuth, GoogleAuthProvider, getReactNativePersistence } from "f
 
 import {ReactNativeAsyncStorage} from "@react-native-async-storage/async-storage"
 
-import {REACT_APP_FIREBASE_APIKEY, REACT_APP_FIREBASE_AUTHDOMAIN, REACT_APP_FIREBASE_PROJECTID, REACT_APP_FIREBASE_STORAGEBUCKET, REACT_APP_FIREBASE_MESSAGINGSENDERID, REACT_APP_FIREBASE_APPID} from "@env";
+// import {process.env.EXPO_PUBLIC_FIREBASE_APIKEY, process.env.EXPO_PUBLIC_FIREBASE_AUTHDOMAIN, process.env.EXPO_PUBLIC_FIREBASE_PROJECTID, process.env.EXPO_PUBLIC_FIREBASE_STORAGEBUCKET, process.env.EXPO_PUBLIC_FIREBASE_MESSAGINGSENDERID, process.env.EXPO_PUBLIC_FIREBASE_APPID} from "@env";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Import the functions you need from the SDKs you need
 
 const firebaseConfig = {
-    apiKey: REACT_APP_FIREBASE_APIKEY,
-    authDomain: REACT_APP_FIREBASE_AUTHDOMAIN,
-    projectId: REACT_APP_FIREBASE_PROJECTID,
-    storageBucket: REACT_APP_FIREBASE_STORAGEBUCKET,
-    messagingSenderId: REACT_APP_FIREBASE_MESSAGINGSENDERID,
-    appId: REACT_APP_FIREBASE_APPID
+    apiKey: process.env.EXPO_PUBLIC_FIREBASE_APIKEY,
+    authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTHDOMAIN,
+    projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECTID,
+    storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGINGSENDERID,
+    appId: process.env.EXPO_PUBLIC_FIREBASE_APPID
 };
 
 // Initialize Firebase
