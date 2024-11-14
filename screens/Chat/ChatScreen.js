@@ -118,10 +118,7 @@ const ChatLayout = ({ navigation }) => {
         <ScrollView contentContainerStyle={styles.chatContainer}>
           {messages.map((msg, index) => (
             <View key={index} style={[styles.messageContainer, msg.senderId === clientId ? { justifyContent: 'flex-end' } : {}]}>
-              {/* <Image
-                source={{ uri: 'https://media.istockphoto.com/id/1423369897/pt/foto/call-center-worker.jpg?s=612x612&w=0&k=20&c=Oa3cHXy-QSWXx0ML4sEKQ5Dt-wMR6hdgCeYXEynGdik=' }}
-                style={styles.profileImage}
-              /> */}
+              
               <View style={msg.senderId === clientId ? styles.userMessage : styles.botMessage}>
                 <Text style={msg.senderId === clientId ? styles.userText : styles.botText}>
                   {msg.senderId === clientId ? "" : chatterName + ": "}{msg.text}

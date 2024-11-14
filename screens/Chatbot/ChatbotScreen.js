@@ -1207,7 +1207,7 @@ const ChatbotScreen = () => {
           style={styles.backButton}>
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.atendimento}> Luna</Text>
+        <Text style={styles.atendimento}>Luna</Text>
         <TouchableOpacity onPress={() => {finalizarChat({navigation})}} style={styles.endButton}>
           <Text style={styles.endButtonText}>Finalizar</Text>
         </TouchableOpacity>
@@ -1228,7 +1228,7 @@ const ChatbotScreen = () => {
             </View>
             <View key={index} style={styles.messageContainer}>
               <Image
-                source={{ uri: 'https://pbs.twimg.com/media/GbLw7wRakAMc5uR?format=jpg&name=900x900' }}
+                source={require("../../assets/images/Luna.gif")}
                 style={styles.profileImage}
               />
               <View style={styles.botMessage}>

@@ -13,8 +13,6 @@ const ProfileScreen = () => {
 
   const [user, setUser] = useState(null);
 
-  // const [username, setUsername] = useState("");
-  // const [email, setEmail] = useState("");
   const [pfpImg, setpfpImg] = useState("../assets/navbar/profile.png");
 
   const [loading, setLoading] = useState(true);
@@ -36,7 +34,7 @@ const ProfileScreen = () => {
     return unsubscribe;
   }, [user, auth])
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <View style={styles.container}>
@@ -46,7 +44,7 @@ const ProfileScreen = () => {
         <Image
           source={{ uri: user ? user.photoURL : "asset:../assets/navbar/profile.png" }}
           style={styles.profileImage}
-        />
+         />
       </View>
 
       {/* Profile Details */}
@@ -77,7 +75,7 @@ const ProfileScreen = () => {
               .then(() => {
                 setUser(null); 
                 setLoading(true);
-                navigation.navigate("HomeScreen");
+                navigation.navigate("Login");
               })
               .catch((error) => {
                 console.error("Erro ao sair: ", error);

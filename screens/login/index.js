@@ -80,6 +80,11 @@ function Login() {
 
   return (
     <View style={styles.container}>
+            {/* Usando KeyboardAvoidingView e ScrollView para lidar com o teclado */}
+      <KeyboardAvoidingView
+        style={styles.keyboardContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
       <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
         <Image
           source={require("../../assets/images/bolabasquete.png")}
@@ -88,11 +93,7 @@ function Login() {
         />
       </Animated.View>
 
-      {/* Usando KeyboardAvoidingView e ScrollView para lidar com o teclado */}
-      <KeyboardAvoidingView
-        style={styles.keyboardContainer}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={styles.form}>
             <Text style={styles.title}>Faça seu login</Text>
@@ -126,13 +127,12 @@ function Login() {
               </TouchableOpacity>
               <Text>{errorMessage}</Text>
             </View>
-
-            <Text style={styles.loginText}>
-              Não possui cadastro?{" "}
-              <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
+            {/* Poque as {""}? */}
+            <Text style={styles.loginText}>Não possui cadastro?{""}
+            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
                 <Text style={styles.loginLink}>Faça seu cadastro!</Text>
               </TouchableOpacity>
-            </Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -181,6 +181,8 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
     marginBottom: 20,
+    marginTop: 33,
+    position: 'static'
   },
   form: {
     width: "80%",
@@ -222,6 +224,8 @@ const styles = StyleSheet.create({
   loginLink: {
     color: "#bf0b3b",
     textDecorationLine: "underline",
+    textAlign: "center",
+    fontSize: 14,
   },
   loginLinks: {
     textAlign: 'center',

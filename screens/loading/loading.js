@@ -1,12 +1,25 @@
 import React from 'react'
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 const Loading = () => {
   return (
-    <Text>
+    <Text style={styles.loading}>
       Carregando...
     </Text>
+
+    
   )
+  
+  
 }
 
 export default Loading
+
+const styles = StyleSheet.create({
+
+  loading: {
+    textAlign: "center",
+    paddingTop: 50,
+  }
+
+})

@@ -8,11 +8,11 @@ export default function App({ navigation }) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const banners = [
-    { id: 1, text: 'Atendimento Online Você pode falar com um membro da nossa secretaria através do atendimento online durante os seguintes horários: Terça a Sexta: das 8h às 20h Sábado: das 8h ao 12hrs Domingo e Segunda: Fechado',imageUrl: require('../../assets/images/celular_chat.png') },
+    { id: 1, text: 'Atendimento Online Você pode falar com um membro da nossa secretaria através do atendimento online durante os seguintes horários: Terça a Sexta: das 8h às 20h Sábado: das 8h ao 12hrs Domingo e Segunda: Fechado', imageUrl: require('../../assets/images/celular_chat.png') },
 
     { id: 2, text: 'Os CATs do SESI-SP são centros de atividades amplos, acolhedores e seguros que oferecem atrações para todas as idades. Aqui você pode ter uma vida mais ativa, saudável e divertida!', imageUrl: require('../../assets/images/cat166.jpg') },
 
-    { id: 3, text: 'A Luna é o chatbot do CAT no SESI Santo André. Ela foi desenvolvida para complementar e facilitar a interação dos usuários com o sistema do CAT, automatizando parte do atendimento. A Luna oferece suporte rápido e eficiente, ajudando tanto clientes quanto funcionários, e está disponível 24/7 para responder a dúvidas', imageUrl: require('../../assets/images/cat166.jpg') },
+    { id: 3, text: 'A Luna é o chatbot do CAT no SESI Santo André. Ela foi desenvolvida para complementar e facilitar a interação dos usuários com o sistema do CAT, automatizando parte do atendimento. A Luna oferece suporte rápido e eficiente, ajudando tanto clientes quanto funcionários, e está disponível 24/7 para responder a dúvidas', imageUrl: require('../../assets/images/Luna.gif') },
   ];
 
   const handleScroll = (event) => {
