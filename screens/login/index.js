@@ -11,10 +11,13 @@ import {
   collection,
   query,
   where,
+  getDocs,
+  addDoc,
+  deleteDoc,
   onSnapshot
 } from "firebase/firestore";
 
-// import { process.env.EXPO_PUBLIC_EXPO_CLIENTID, process.env.EXPO_PUBLIC_ANDROID_CLIENTID } from "@env";
+import uuid from 'react-native-uuid';
 
 function Login() {
   const navigation = useNavigation();
@@ -32,6 +35,13 @@ function Login() {
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENTID,
   });
 
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const auth = response;
+      
+      updateEmployees();
+    }
+  }, [response]);
 
   useEffect(() => {
     Animated.timing(imagePosition, {
@@ -41,20 +51,92 @@ function Login() {
       useNativeDriver: true,
     }).start();
   }, [imagePosition]);
+  
+  const updateEmployees = async () => {
+    const employeesQuery = query(collection(db, "employee"));
+
+    onSnapshot(employeesQuery, async (snapshot) => {
+      const employeesArray = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        Id: doc.id,
+      }));
+
+      const currentUserId = auth.currentUser.uid;
+      const currentUserName = auth.currentUser.displayName;
+      const currentUserEmail = auth.currentUser.email;
+
+      const chatsQuery = query(collection(db, "chats"));
+      const chatsSnapshot = await getDocs(chatsQuery);
+
+      const chatsArray = chatsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      const validEmployeeIds = employeesArray.map((employee) => employee.employeeId);
+
+      chatsArray.forEach(async (chat) => {
+        const isCurrentUserInChat = chat.users.some(
+          (user) => user.id === currentUserId
+        );
+        
+        const otherUser = chat.users.find((user) => user.id !== currentUserId);
+
+        if (
+          isCurrentUserInChat &&
+          (!otherUser || !validEmployeeIds.includes(otherUser.id))
+        ) {
+          await deleteDoc(doc(db, "chats", chat.id));
+        }
+      });
+
+      employeesArray.forEach(async (employee) => {
+        if (employee.employeeId !== currentUserId) {
+          const existingChat = chatsArray.find((chat) => {
+            const userIds = chat.users.map((user) => user.id);
+            return (
+              userIds.includes(currentUserId) &&
+              userIds.includes(employee.employeeId) &&
+              userIds.length === 2
+            );
+          });
+
+          if (!existingChat) {
+            const chatData = {
+              id: uuid.v4(),
+              users: [
+                {
+                  name: currentUserName,
+                  email: currentUserEmail,
+                  id: currentUserId,
+                },
+                {
+                  name: employee.name,
+                  email: employee.email,
+                  id: employee.employeeId,
+                },
+              ],
+            };
+
+            await addDoc(collection(db, "chats"), chatData);
+          }
+        }
+      });
+    });
+  };
 
   const logIn = ({ navigation }) => {
-
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         setEmail("");
         setPassword("");
 
+        updateEmployees();
+
         navigation.navigate('HomeScreen');
       })
       .catch(error => {
-
         switch (error.code) {
-
           case 'auth/user-not-found':
             seterrorMessage('Usuário não encontrado. Verifique seu email e tente novamente.');
             break;
@@ -68,126 +150,109 @@ function Login() {
             seterrorMessage('Email incorreto. Verifique seu email e tente novamente.');
             break;
           default:
-            seterrorMessage(`Ocorreu um erro inesperado. Tente novamente mais tarde`);
+            seterrorMessage("Ocorreu um erro inesperado. Tente novamente mais tarde");
             break;
         }
 
-        console.log(error)
-
+        console.log(error);
       });
-
   };
 
   return (
-    <View style={styles.container}>
-            {/* Usando KeyboardAvoidingView e ScrollView para lidar com o teclado */}
-      <KeyboardAvoidingView
-        style={styles.keyboardContainer}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <KeyboardAvoidingView
+      style={styles.keyboardContainer}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.select({ ios: 60, android: 0 })}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-      <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
-        <Image
-          source={require("../../assets/images/bolabasquete.png")}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </Animated.View>
+        <Animated.View style={[styles.imageSection, { transform: [{ translateY: imagePosition }] }]}>
+          <Image
+            source={require("../../assets/images/bolabasquete.png")}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </Animated.View>
 
+        <View style={styles.form}>
+          <Text style={styles.title}>Faça seu login</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail:"
+            inputMode="email"
+            placeholderTextColor="#000"
+            value={email}
+            onChangeText={(e) => setEmail(e)}
+            keyboardType="email-address"
+            autoComplete="email"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Senha:"
+            placeholderTextColor="#000"
+            value={password}
+            onChangeText={(e) => setPassword(e)}
+            secureTextEntry
+            autoComplete="password"
+          />
+          <Text>{errorMessage}</Text>
+          
+          <Text style={styles.loginLinks}>Esqueci minha senha</Text>
 
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.form}>
-            <Text style={styles.title}>Faça seu login</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="E-mail:"
-              inputMode="email"
-              placeholderTextColor="#000"
-              value={email}
-              onChangeText={(e) => { console.log(email); setEmail(e) }}
-              keyboardType="email-address"
-              autoComplete="email"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Senha:"
-              placeholderTextColor="#000"
-              value={password}
-              onChangeText={(e) => { console.log(password); setPassword(e) }}
-              secureTextEntry
-              autoComplete="password"
-            />
-            <Text style={styles.loginLinks}>Esqueci minha senha</Text>
-
-            <View styles={styles.buttonCont}>
-              <TouchableOpacity onPress={() => logIn({ navigation })} style={styles.button}>
-                <Text style={styles.buttonText}>Entrar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => promptAsync()} style={styles.buttonGoogle}>
-                <Text style={styles.buttonText}>Entrar com o google</Text>
-              </TouchableOpacity>
-              <Text>{errorMessage}</Text>
-            </View>
-            {/* Poque as {""}? */}
-            <Text style={styles.loginText}>Não possui cadastro?{""}
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
-                <Text style={styles.loginLink}>Faça seu cadastro!</Text>
-              </TouchableOpacity>
+          <View style={styles.buttonCont}>
+            <TouchableOpacity onPress={() => logIn({ navigation })} style={styles.button}>
+              <Text style={styles.buttonText}>Entrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => promptAsync()} style={styles.buttonGoogle}>
+              <Text style={styles.buttonText}>Entrar com o google</Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </View>
+
+          <Text style={styles.loginText}>Não possui cadastro?{""}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
+            <Text style={styles.loginLink}>Faça seu cadastro!</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  buttonCont: {
-    display: 'flex',
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%"
-  },
   keyboardContainer: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: "center",
-    paddingBottom: 0,
+    paddingBottom: 20,
   },
   imageSection: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "30%",
+    position: "relative",
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
   },
   image: {
-    marginTop: -20,
     height: 430,
     width: "100%",
-    marginBottom: -20,
   },
   title: {
     fontSize: 32,
     color: "#000",
     textAlign: "center",
     marginBottom: 20,
-    marginTop: 33,
-    position: 'static'
   },
   form: {
     width: "80%",
     alignSelf: "center",
-    marginTop: 150,
   },
   input: {
     height: 50,
@@ -197,9 +262,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 10,
   },
+  buttonCont: {
+    display: 'flex',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+
+  },
   button: {
     backgroundColor: "#000",
     paddingVertical: 15,
+    width: "100%",
     alignItems: "center",
     borderRadius: 15,
     marginTop: 20,
@@ -235,3 +308,4 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+
