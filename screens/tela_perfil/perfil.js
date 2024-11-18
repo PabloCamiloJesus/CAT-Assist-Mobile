@@ -34,13 +34,11 @@ const ProfileScreen = () => {
     return unsubscribe;
   }, [user, auth])
 
-  // if (loading) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <View style={styles.container}>
-      {/* Header with Profile Picture */}
       <View style={styles.header}>
-        {/* Profile Image larger and overlapping */}
         <Image
           source={{ uri: user ? user.photoURL : "asset:../assets/navbar/profile.png" }}
           style={styles.profileImage}
@@ -50,7 +48,6 @@ const ProfileScreen = () => {
       {/* Profile Details */}
       <View style={styles.profileDetails}>
         <Text style={styles.name}>{user ? user.displayName : "DEFAULT"}</Text>
-        <Text style={styles.age}>9 anos</Text>
 
         <View style={styles.divider} />
 
@@ -59,17 +56,8 @@ const ProfileScreen = () => {
 
         <View style={styles.divider} />
 
-        {/* <Text style={styles.label}>DATA NASCIMENTO</Text>
-        <Text style={styles.birthDate}>05/06/2015</Text> */}
-
-        {/* <View style={styles.divider} /> */}
-
-        {/* Card Expiry and Logout Button */}
         <View style={styles.footer}>
-          {/* <View>
-            <Text style={styles.cardLabel}>Vencimento da carteirinha:</Text>
-            <Text style={styles.cardExpiry}>12/09/2026</Text>
-          </View> */}
+
           <TouchableOpacity onPress={() => {
             signOut(auth)
               .then(() => {
@@ -95,28 +83,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   header: {
-    height: 120,  // Reduced height to make space for image to overlap
+    height: 120,
     backgroundColor: '#D10542',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 10, // Adds spacing to adjust image overlap
+    paddingBottom: 10,
   },
   profileImage: {
-    width: 160,  // Increased size to make the image larger
+    width: 160,
     height: 160,
-    borderRadius: 80,  // Circular image
-    borderWidth: 4,  // White border for better appearance
+    borderRadius: 80,
+    borderWidth: 4,
     borderColor: '#fff',
     backgroundColor: '#CCCCCC',
-    position: 'absolute',  // Overlap effect
-    top: 50,  // Adjust the position to overlap header and details area
+    position: 'absolute',
+    top: 50,
   },
   profileDetails: {
     padding: 20,
     alignItems: 'center',
-    marginTop: 80,  // Added margin to adjust the content below the image
+    marginTop: 80,
   },
   name: {
     fontSize: 22,

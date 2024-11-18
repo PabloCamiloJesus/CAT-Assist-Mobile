@@ -21,6 +21,7 @@ import ChatScreen from "./screens/Chat/ChatScreen";
 import Redefinicao from "./screens/Redefinir_senha/redefinicaao"
 import FAQScreen from './screens/FAQ/FAQScreen';
 import Navbar from "./components/navbar";
+import Loading from "./screens/loading/loading";
 
 AppRegistry.registerComponent("main", () => App);
 
@@ -63,6 +64,16 @@ export default function App() {
           }}
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("Splash"),
+          })}
+        />
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
+          options={{
+            headerShown: false,
+          }}
+          listeners={({ navigation }) => ({
+            focus: () => handleNavigationChange("Loading"),
           })}
         />
         <Stack.Screen

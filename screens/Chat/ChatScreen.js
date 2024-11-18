@@ -197,18 +197,26 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   contactButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    
     borderColor: "black",
     borderStyle: "solid",
     borderWidth: 2,
-    width: '100%',
+    width: "100%",
+    textAlign: "center",
     paddingVertical: 12,
+    paddingHorizontal: 0,
   },
   contactList: {
-    flex: 1,
-    flexDirection: "column",
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    width: "100%",
+    padding: 0,
+    gap: 10,
+    margin: 0,
+    alignItems: "stretch",
+    justifyContent: "flex-start"
   },
   Header: {
     flexDirection: 'row',
