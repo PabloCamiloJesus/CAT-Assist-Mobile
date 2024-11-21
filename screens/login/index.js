@@ -28,18 +28,32 @@ function Login() {
 
   const imagePosition = useRef(new Animated.Value(-300)).current;
 
-  // acesso é negado devido a verificação do google
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     webClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENTID,
-  });
+    scopes: ['profile', 'email'],
+  },
+  { native: 'com.toranjeworks.catassist://login' });
 
   useEffect(() => {
-    if (response?.type === 'success') {
-      const auth = response;
-      
-      updateEmployees();
+    if (response?.type === 'success' && response.authentication) {
+      const { idToken } = response.authentication;
+  
+      // Create a Firebase credential with the Google ID token
+      const credential = GoogleAuthProvider.credential(idToken);
+  
+      // Sign in with Firebase
+      signInWithCredential(auth, credential)
+        .then(userCredential => {
+          // Successfully signed in
+          console.log('User signed in:', userCredential.user);
+          updateEmployees(); // Your custom function
+        })
+        .catch(error => {
+          // Handle errors here
+          console.error('Error signing in with Firebase:', error);
+        });
     }
   }, [response]);
 

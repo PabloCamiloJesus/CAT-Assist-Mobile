@@ -21,12 +21,13 @@ function Cadastro() {
   const photoURL = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg";
   const [errorMessage, seterrorMessage] = useState("");
 
-  // acesso é negado devido a verificação do google
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     webClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENTID,
-  });
+    scopes: ['profile', 'email'],
+  },
+  { native: 'com.toranjeworks.catassist://login' });
 
   const imagePosition = useRef(new Animated.Value(-250)).current;
 

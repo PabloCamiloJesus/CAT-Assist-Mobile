@@ -34,8 +34,62 @@ export default function App() {
     setCurrentScreen(routeName);
   };
 
+  const linkingConfig = {
+    prefixes: ['com.toranjeworks.catassist://'],
+    // prefixes: ['exp://localhost:8081/--/catassist'],
+    config: {
+      screens: {
+        PageList: {
+          path: 'page-list'
+        },
+        Splash: {
+          path: 'splash'
+        },
+        Loading: {
+          path: 'loading'
+        },
+        Recepcao: {
+          path: 'reception'
+        },
+        Sobrenos: {
+          path: 'about-us'
+        },
+        Cadastro: {
+          path: 'register'
+        },
+        Login: {
+          path: 'login'
+        },
+        RecuperarSenha: {
+          path: 'recover-password'
+        },
+        Redefinicao: {
+          path: 'reset-password'
+        },
+        Avalicao_tela: {
+          path: 'evaluation'
+        },
+        ProfileScreen: {
+          path: 'profile'
+        },
+        HomeScreen: {
+          path: 'home'
+        },
+        ChatScreen: {
+          path: 'chat'
+        },
+        ChatbotScreen: {
+          path: 'chatbot'
+        },
+        FAQScreen: {
+          path: 'faq'
+        },
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linkingConfig}>
       <Stack.Navigator
         // DEVELOPER-- switch to Splash after all the software is completed
         initialRouteName="PageList"
@@ -125,7 +179,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("RecuperarSenha"),
           })}
-          
+
         />
         <Stack.Screen
           name="Redefinicao"
@@ -136,7 +190,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("Redefinicao"),
           })}
-          
+
         />
         <Stack.Screen
           name="Avalicao_tela"
@@ -147,7 +201,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("Avalicao_tela"),
           })}
-          
+
         />
         <Stack.Screen
           name="ProfileScreen"
@@ -158,7 +212,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("ProfileScreen"),
           })}
-          
+
         />
         <Stack.Screen
           name="HomeScreen"
@@ -169,7 +223,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("HomeScreen"),
           })}
-          
+
         />
         <Stack.Screen
           name="ChatScreen"
@@ -180,7 +234,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("ChatScreen"),
           })}
-          
+
         />
         <Stack.Screen
           name="ChatbotScreen"
@@ -191,7 +245,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("ChatbotScreen"),
           })}
-          
+
         />
         <Stack.Screen
           name="FAQScreen"
@@ -202,7 +256,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("FAQScreen"),
           })}
-          
+
         />
       </Stack.Navigator>
 
@@ -211,7 +265,7 @@ export default function App() {
         currentScreen != "Cadastro" &&
         currentScreen != "ChatScreen" &&
         currentScreen != "ChatbotScreen" &&
-        currentScreen != "Login" && ( 
+        currentScreen != "Login" && (
           <Navbar cs={currentScreen} />
         )}
     </NavigationContainer>
