@@ -111,7 +111,7 @@ const ChatLayout = ({ navigation }) => {
           <TouchableOpacity onPress={() => setChatId(null)} style={styles.backButton}>
             <Text style={styles.backButtonText}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.atendimento}> Atendimento</Text>
+          <Text style={styles.atendimento}>{chatterName}</Text>
         </View>
 
         {/* Área de mensagens FINAL */}
@@ -121,7 +121,7 @@ const ChatLayout = ({ navigation }) => {
               
               <View style={msg.senderId === clientId ? styles.userMessage : styles.botMessage}>
                 <Text style={msg.senderId === clientId ? styles.userText : styles.botText}>
-                  {msg.senderId === clientId ? "" : chatterName + ": "}{msg.text}
+                  {msg.text}
                 </Text>
               </View>
             </View>
@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     maxWidth: '80%',
+    borderBottomLeftRadius: 0
   },
   botText: {
     color: '#000',
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     maxWidth: '80%',
+    borderBottomRightRadius: 0
   },
   userText: {
     color: '#fff',

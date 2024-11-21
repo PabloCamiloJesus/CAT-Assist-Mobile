@@ -20,6 +20,12 @@
     },
     "android": {
       "package": "com.toranjeworks.catassist",
+      "config": {
+        "googleSignIn": {
+          "certificateHash": "63:71:30:C3:5D:DC:19:13:ED:00:49:AA:E0:13:D1:4C:D3:27:58:ED", 
+          "reservedClientId":"1082914937728-oculks97vj29enqtgfi9bt89jq2cfp3s.apps.googleusercontent.com"
+        }
+      },
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

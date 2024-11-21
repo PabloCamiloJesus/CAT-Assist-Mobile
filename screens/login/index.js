@@ -28,14 +28,16 @@ function Login() {
 
   const imagePosition = useRef(new Animated.Value(-300)).current;
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
+  const [request, response, promptAsync] = Google.useAuthRequest(
+    {
     expoClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     webClientId: process.env.EXPO_PUBLIC_EXPO_CLIENTID,
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENTID,
     scopes: ['profile', 'email'],
-  },
-  { native: 'com.toranjeworks.catassist://login' });
-
+    },
+   
+  { native: 'https://auth.expo.io/@fhelipeam/cat-assist-mobile/login' });
+  
   useEffect(() => {
     if (response?.type === 'success' && response.authentication) {
       const { idToken } = response.authentication;
@@ -221,6 +223,7 @@ function Login() {
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => promptAsync()} style={styles.buttonGoogle}>
+
               <Text style={styles.buttonText}>Entrar com o google</Text>
             </TouchableOpacity>
           </View>
@@ -319,6 +322,7 @@ const styles = StyleSheet.create({
     color: "gray",
     textDecorationLine: "underline",
   },
+
 });
 
 export default Login;
