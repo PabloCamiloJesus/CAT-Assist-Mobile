@@ -28,7 +28,7 @@ AppRegistry.registerComponent("main", () => App);
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState("PageList");
+  const [currentScreen, setCurrentScreen] = useState("Splash");
 
   const handleNavigationChange = (routeName) => {
     setCurrentScreen(routeName);
@@ -39,9 +39,9 @@ export default function App() {
     // prefixes: ['exp://localhost:8081/--/catassist'],
     config: {
       screens: {
-        PageList: {
-          path: 'page-list'
-        },
+        // PageList: {
+        //   path: 'page-list'
+        // },
         Splash: {
           path: 'splash'
         },
@@ -92,14 +92,14 @@ export default function App() {
     <NavigationContainer linking={linkingConfig}>
       <Stack.Navigator
         // DEVELOPER-- switch to Splash after all the software is completed
-        initialRouteName="PageList"
-        // initialRouteName="Splash"
+        // initialRouteName="PageList"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
       >
         {/* DEVELOPER SCREENS */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="PageList"
           component={PageList}
           options={{
@@ -108,7 +108,7 @@ export default function App() {
           listeners={({ navigation }) => ({
             focus: () => handleNavigationChange("PageList"),
           })}
-        />
+        /> */}
         {/* END OF DEVELOPER SCREENS */}
         <Stack.Screen
           name="Splash"
