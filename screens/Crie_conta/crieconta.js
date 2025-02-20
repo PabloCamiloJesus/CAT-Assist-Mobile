@@ -42,22 +42,13 @@ function Cadastro() {
     }).start();
   }, [imagePosition]);
 
-  useEffect(() => {
-    if (response?.type === 'success' && response.authentication) {
-      const { idToken } = response.authentication;
-
-      const credential = GoogleAuthProvider.credential(idToken);
-
-      signInWithCredential(auth, credential)
-        .then(userCredential => {
-          console.log('User signed in:', userCredential.user);
-          updateEmployees();
-        })
-        .catch(error => {
-          console.error('Error signing in with Firebase:', error);
-        });
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response?.type === 'success') {
+  //     const { id_token } = response.authentication;
+  //     const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
+  //     firebase.auth().signInWithCredential(credential);
+  //   }
+  // }, [response]);
 
   const register = ({ navigation }) => {
 
@@ -163,7 +154,6 @@ function Cadastro() {
               secureTextEntry
               autoComplete="password"
             />
-            <Text style={{ color: "#f00", textAlign: "center" }}>{errorMessage}</Text>
 
             <View>
               <TouchableOpacity style={styles.button} onPress={() => register({ navigation })}>
@@ -172,6 +162,7 @@ function Cadastro() {
               <TouchableOpacity disabled={!request} onPress={() => promptAsync()} style={styles.buttonGoogle}>
                 <Text style={styles.buttonText}>Entrar com o google</Text>
               </TouchableOpacity>
+              <Text>{errorMessage}</Text>
             </View>
 
             <Text style={styles.loginText}>

@@ -41,10 +41,10 @@ function Login() {
   useEffect(() => {
     if (response?.type === 'success' && response.authentication) {
       const { idToken } = response.authentication;
-
+  
       // Create a Firebase credential with the Google ID token
       const credential = GoogleAuthProvider.credential(idToken);
-
+  
       // Sign in with Firebase
       signInWithCredential(auth, credential)
         .then(userCredential => {
@@ -67,7 +67,7 @@ function Login() {
       useNativeDriver: true,
     }).start();
   }, [imagePosition]);
-
+  
   const updateEmployees = async () => {
     const employeesQuery = query(collection(db, "employee"));
 
@@ -95,7 +95,7 @@ function Login() {
         const isCurrentUserInChat = chat.users.some(
           (user) => user.id === currentUserId
         );
-
+        
         const otherUser = chat.users.find((user) => user.id !== currentUserId);
 
         if (
@@ -157,7 +157,7 @@ function Login() {
             seterrorMessage('Usuário não encontrado. Verifique seu email e tente novamente.');
             break;
           case 'auth/invalid-credential':
-            seterrorMessage('Email ou senha incorretos, verifique suas informações e tente novamente.');
+            seterrorMessage('Usuário não encontrado. Verifique seu email e tente novamente.');
             break;
           case 'auth/wrong-password':
             seterrorMessage('Senha incorreta. Verifique sua senha e tente novamente.');
@@ -214,8 +214,8 @@ function Login() {
             secureTextEntry
             autoComplete="password"
           />
-          <Text style={{ color: "#f00", textAlign: "center" }}>{errorMessage}</Text>
-
+          <Text>{errorMessage}</Text>
+          
           <Text style={styles.loginLinks}>Esqueci minha senha</Text>
 
           <View style={styles.buttonCont}>

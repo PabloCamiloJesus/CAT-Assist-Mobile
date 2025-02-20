@@ -32,10 +32,10 @@ const Navbar = () => {
 
   const screens = [
     { name: 'Home', image: Home, screen: "HomeScreen", styleFormat: styles.icon, iconStyle: styles.none },
-    { name: 'Chat', image: Chat, screen: user ? "ChatScreen" : "Login", styleFormat: styles.icon, iconStyle: styles.none },
+    { name: 'Chat', image: Chat, screen: "ChatScreen", styleFormat: styles.icon, iconStyle: styles.none },
     { name: 'ChatBot', image: ChatBot, screen: "ChatbotScreen", styleFormat: styles.mainIcon, iconStyle: styles.none },
     { name: 'FAQ', image: FAQ, screen: "FAQScreen", styleFormat: styles.icon, iconStyle: styles.none },
-    { name: 'Profile', image: user ? { uri: user.photoURL } : require('../assets/navbar/profile.png'), screen: user ? "ProfileScreen" : "Login", styleFormat: styles.icon, iconStyle: user ? styles.pfp : styles.none },
+    { name: 'Profile', image: user ? { uri: user.photoURL } : require('../assets/navbar/profile.png'), screen: "ProfileScreen", styleFormat: styles.icon, iconStyle: user ? styles.pfp : styles.none },
   ];
 
   useEffect(() => {
